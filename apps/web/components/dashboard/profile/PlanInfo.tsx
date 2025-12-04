@@ -46,10 +46,10 @@ const PlanInfo: React.FC<Props> = ({ planInfo }) => {
       </div>
       <button
         type="submit"
-        disabled={planInfo.planType === "pro"}
+        disabled={planInfo.planType === "pro" && planInfo.planStatus === "active"}
         onClick={() => setIsOpenPlans((pre) => !pre)}
         className={`w-full mt-5 py-2 rounded-md font-medium transition-colors ${
-          planInfo.planType === "pro" ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-primary hover:bg-[#ea580c] active:bg-[#c2410c] text-white"
+          planInfo.planType === "pro" && planInfo.planStatus === "active" ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-primary hover:bg-[#ea580c] active:bg-[#c2410c] text-white"
           }`}
       >
         Upgrade

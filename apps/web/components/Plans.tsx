@@ -13,7 +13,9 @@ const Plans = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`
+        );
         const { plans } = await res.json();
         setPlans(plans);
       } catch (error) {
@@ -38,12 +40,15 @@ const Plans = () => {
       price: plan.price,
     };
     try {
-      const ordres = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
+      const ordres = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/order`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(payload),
+        }
+      );
       const order = await ordres.json();
 
       const options = {
@@ -53,7 +58,7 @@ const Plans = () => {
         name: "Yadxy",
         description: `${plan.type}`,
         order_id: order.orderId,
-        handler: async function (response:any) {
+        handler: async function (response: any) {
           const verifyRes = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/verifyPayment`,
             {
@@ -65,7 +70,7 @@ const Plans = () => {
           );
           const data = await verifyRes.json();
           if (data.success) {
-            await session.update()
+            await session.update();
             setMessage(data.message);
           } else {
             console.log("Payment failed");
@@ -86,7 +91,6 @@ const Plans = () => {
       );
     }
   }
-
   return (
     <>
       {message && (
@@ -102,14 +106,15 @@ const Plans = () => {
         ) : (
           plans.map((plan) => {
             const userPlan = session.data?.user.plan;
-            const isCurrent = userPlan === plan.type;
-            console.log("current plan", userPlan);
-
+            const userPlanStatus:string = "expire";            
+            const isCurrent = userPlan === plan.type && userPlanStatus==="active";            
+            
             // ✅ Disable logic:
             // If user is on "Paid" (199) plan, disable all buttons (even Free)
             // If user is on "Free", only allow upgrading (not re-subscribing)
             const isDisabled =
               isCurrent || (userPlan === "pro" && plan.type === "free");
+              
             return (
               <div
                 key={plan._id.toString()}

@@ -11,7 +11,9 @@ cron.schedule("05 11 * * *", cronJobs.sendsendFeeReminders, {
   timezone: "Asia/Kolkata",
 });
 
-cron.schedule("00 24 * * *", async () => {
+cron.schedule("50 12 * * *", async () => {
+  console.log("plan downgrader");
+  
   const now = getTodayDate();
   const teachers = await User.find({
     planType: "pro",
@@ -19,7 +21,7 @@ cron.schedule("00 24 * * *", async () => {
   });
 
   for(const teacher of teachers){
-    teacher.planType = "free",
+    teacher.planStatus = "expired";
     teacher.isPremiumActive = false;
 
     const students = await Student.find({

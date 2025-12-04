@@ -1,5 +1,5 @@
 import { connectTodb, User } from "@repo/db";
-import { UserSchema, UserUpdateSchema } from "@repo/validation/types";
+import {  UserUpdateSchema } from "@repo/validation/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
