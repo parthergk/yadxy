@@ -6,6 +6,7 @@ declare module "next-auth" {
     user: {
       id: string;
       plan: string;
+      planStatus: string;
       name: string;
       email: string;
       profileComplete: boolean;
@@ -15,6 +16,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     plan: string;
+    planStatus: string;
     name: string;
     email: string;
     profileComplete: boolean;
@@ -25,6 +27,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     plan: string;
+    planStatus: string;
     name: string;
     email: string;
     profileComplete: boolean;

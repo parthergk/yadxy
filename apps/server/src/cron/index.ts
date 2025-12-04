@@ -11,7 +11,7 @@ cron.schedule("05 11 * * *", cronJobs.sendsendFeeReminders, {
   timezone: "Asia/Kolkata",
 });
 
-cron.schedule("50 12 * * *", async () => {
+cron.schedule("26 16 * * *", async () => {
   console.log("plan downgrader");
   
   const now = getTodayDate();

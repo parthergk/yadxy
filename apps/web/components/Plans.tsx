@@ -106,7 +106,7 @@ const Plans = () => {
         ) : (
           plans.map((plan) => {
             const userPlan = session.data?.user.plan;
-            const userPlanStatus:string = "expire";            
+            const userPlanStatus = session.data?.user.planStatus;            
             const isCurrent = userPlan === plan.type && userPlanStatus==="active";            
             
             // ✅ Disable logic:

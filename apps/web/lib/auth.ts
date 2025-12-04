@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
               email: user.email,
               name: user.name,
               plan: user.planType,
+              planStatus: user.planStatus,
               profileComplete: user.profileComplete || false
             };
           }
@@ -63,6 +64,7 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             plan: user.planType,
+            planStatus: user.planStatus,
             profileComplete: user.profileComplete || false
           };
         } catch (error) {
@@ -95,11 +97,13 @@ export const authOptions: NextAuthOptions = {
             user.id = newUser._id.toString();
             user.profileComplete = newUser.profileComplete;
             user.plan = newUser.planType;
+            user.planStatus = newUser.planStatus;
           } else {
             user.id = existingUser._id.toString();
             user.name = existingUser.name;
             user.email = existingUser.email;
             user.plan = existingUser.planType;
+            user.planStatus = existingUser.planStatus;
             user.profileComplete = existingUser.profileComplete;
           }
         }
@@ -116,6 +120,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.name = user.name;
         token.plan = user.plan;
+        token.planStatus = user.planStatus;
         token.email = user.email;
         token.profileComplete = user.profileComplete;
       }
@@ -125,6 +130,7 @@ export const authOptions: NextAuthOptions = {
         if (upUser) {
           token.name = upUser.name;
           token.plan = upUser.planType;
+          token.planStatus = upUser.planStatus;
           token.profileComplete = upUser.profileComplete;
         }
       }
@@ -136,6 +142,7 @@ export const authOptions: NextAuthOptions = {
       session.user.id = token.id as string;
       session.user.name = token.name as string;
       session.user.plan = token.plan as string;
+      session.user.planStatus = token.planStatus as string;
       session.user.email = token.email as string;
       session.user.profileComplete = token.profileComplete as boolean
       return session;
