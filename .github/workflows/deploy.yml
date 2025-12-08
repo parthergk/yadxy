@@ -25,7 +25,8 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use 22
 
-            cd feexy
+            cd yadxy
+
             git pull origin main
 
             corepack enable
@@ -33,16 +34,12 @@ jobs:
             
             pnpm install --frozen-lockfile
 
-            # Build web
             cd apps/web
             pnpm run build
 
-            # Build backend
             cd ../server
             pnpm run build
 
-            # Return to project root
             cd ../../
 
-            # Restart PM2 services
             pm2 restart ecosystem.config.js
