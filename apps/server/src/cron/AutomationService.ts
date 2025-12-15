@@ -30,7 +30,7 @@ export class FeeAutomationService {
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
 
-    if (student.stopReminder) {
+    if (student.stopReminder) {      
       return false;
     }
 

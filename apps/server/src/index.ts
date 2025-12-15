@@ -14,6 +14,7 @@ import paymentRouter from "./routes/webhook/razorpay/payment.route";
 import paymentStatusRouter from "./routes/payment.routes";
 import sendOverduesRouter from "./routes/overdues.routes";
 import teacherRouter from "./routes/teacher.route";
+import whatsappRoute from "./routes/webhook/whatsapp/verifyWebhook.route";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -41,6 +42,7 @@ async function startServer() {
     app.use("/api/v1/overdue", sendOverduesRouter);
     app.use("/api/v1/teacher", teacherRouter);
     app.use("/api/v1/verifyPayment",paymentStatusRouter)
+    app.use("/api/v1/whatsapp/verify", whatsappRoute)
 
     app.listen(PORT, () => {
       console.log(`Server is runing on port: ${PORT}`);

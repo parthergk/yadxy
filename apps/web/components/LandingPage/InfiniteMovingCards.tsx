@@ -2,8 +2,48 @@
 import React, { useEffect, useRef, useState } from "react";
 import TestimonialsCard from "./Cards/TestimonialsCard";
 
+interface Review {
+  text: string;
+  name: string;
+  subject: string;
+  url: string;
+}
+
+const reviews: Review[] = [
+  {
+    text: "Easily track every student in one place. Add new students, update details, and manage without any hassle. With our intuitive student database, teachers can save time and focus more on teaching.",
+    name: "Jatin Sharma",
+    subject: "Math",
+    url:"/image/teacher/teacher1.png"
+  },
+  {
+    text: "The fee reminder feature is very helpful. It saves a lot of manual work.",
+    name: "Priya Desai",
+    subject: "Science",
+    url:"/image/teacher/teacher2.png"
+  },
+  {
+    text: "Tracking student performance has become very simple. I appreciate the detailed analytics provided. It could improve with more customization options for reports.",
+    name: "Sajal Arora",
+    subject: "Science",
+    url:"/image/teacher/teacher3.png"
+  },
+  {
+    text: "The platform is great for sending bulk updates to parents. It's easy to use, and the templates make communication smooth.",
+    name: "Anjali Kumari",
+    subject: "English",
+    url:"/image/teacher/teacher4.png"
+  },
+  {
+    text: "I like how we can keep all student records neatly organized. The interface is clean, but I wish there was a mobile app version for quick access on the go.",
+    name: "Sandeep Singh",
+    subject: "Computer Science",
+    url:"/image/teacher/teacher5.png"
+  },
+];
+
 const InfiniteMovingCards = ({
-   direction = "up",
+  direction = "up",
   speed = "normal",
   pauseOnHover = true,
 }: {
@@ -36,31 +76,21 @@ const InfiniteMovingCards = ({
 
   const getDirection = () => {
     if (containerRef.current) {
-      if (direction === "down") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "normal"
-        );
-      } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse"
-        );
-      }
+      containerRef.current.style.setProperty(
+        "--animation-direction",
+        direction === "down" ? "normal" : "reverse"
+      );
     }
   };
 
   const getSpeed = () => {
     if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      }
+      const duration =
+        speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
+      containerRef.current.style.setProperty("--animation-duration", duration);
     }
   };
+
   return (
     <div ref={containerRef} className="overflow-hidden">
       <div
@@ -69,8 +99,8 @@ const InfiniteMovingCards = ({
           start && "animate-scrollY"
         } ${pauseOnHover && "hover:[animation-play-state:paused]"}`}
       >
-        {new Array(1, 2, 3).map((item) => (
-          <TestimonialsCard key={item} />
+        {reviews.map((review, idx) => (
+          <TestimonialsCard key={idx} review={review} />
         ))}
       </div>
     </div>
