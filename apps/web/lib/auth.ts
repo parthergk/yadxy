@@ -150,6 +150,18 @@ export const authOptions: NextAuthOptions = {
 
   },
 
+  cookies:{
+    sessionToken:{
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        path: "/",
+      },
+    }
+  },
+
   pages: {
     signIn: "/login",
     error: "/login",
