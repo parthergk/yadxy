@@ -1,13 +1,13 @@
-import cron from "node-cron";
-import { cronJobs } from "./AutomationService";
-import { Student, User } from "@repo/db";
-import { getTodayDate } from "../utils/dateUtils";
+// import cron from "node-cron";
+// import { cronJobs } from "./AutomationService";
+// import { Student, User } from "@repo/db";
+// import { getTodayDate } from "../utils/dateUtils";
 
-// cron.schedule("51 17 * * *", cronJobs.generateMonthlyFees, {
+// cron.schedule("04 21 * * *", cronJobs.generateMonthlyFees, {
 //   timezone: "Asia/Kolkata",
 // });
 
-// cron.schedule("52 17 * * *", cronJobs.sendsendFeeReminders, {
+// cron.schedule("05 21 * * *", cronJobs.sendsendFeeReminders, {
 //   timezone: "Asia/Kolkata",
 // });
 

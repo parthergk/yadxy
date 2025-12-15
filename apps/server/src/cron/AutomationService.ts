@@ -3,7 +3,6 @@ import {
   FeePayment,
   NotificationLog,
   Student,
-  User,
 } from "@repo/db";
 import { smsSender } from "../lib/twilioClient";
 import { whatsappSender } from "../lib/whatsappClient";
