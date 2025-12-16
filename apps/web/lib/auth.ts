@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
               name: user.name,
               plan: user.planType,
               planStatus: user.planStatus,
-              profileComplete: user.profileComplete || false
+              profileComplete: user.profileComplete || false,
             };
           }
 
@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             plan: user.planType,
             planStatus: user.planStatus,
-            profileComplete: user.profileComplete || false
+            profileComplete: user.profileComplete || false,
           };
         } catch (error) {
           const errorMsg =
@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
             const newUser = await User.create({
               email: user.email,
               isVerified: true,
-              profileComplete: false
+              profileComplete: false,
             });
             user.id = newUser._id.toString();
             user.profileComplete = newUser.profileComplete;
@@ -114,7 +114,7 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    
+
     async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
@@ -144,23 +144,11 @@ export const authOptions: NextAuthOptions = {
       session.user.plan = token.plan as string;
       session.user.planStatus = token.planStatus as string;
       session.user.email = token.email as string;
-      session.user.profileComplete = token.profileComplete as boolean
+      session.user.profileComplete = token.profileComplete as boolean;
       return session;
     },
-
   },
 
-  cookies:{
-    sessionToken:{
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-        path: "/",
-      },
-    }
-  },
 
   pages: {
     signIn: "/login",
