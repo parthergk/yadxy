@@ -3,22 +3,23 @@ import React, { useEffect, useState } from "react";
 import PriceCard from "../Cards/PriceCard";
 import { motion } from "motion/react";
 import { IPlan } from "@repo/types";
+import { plans } from "../../../helpers/Plans";
 
 const PriceSection = () => {
-  const [plans, setPlans] = useState<IPlan[]>([]);
+  // const [plans, setPlans] = useState<IPlan[]>([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`);
-        const {plans} = await res.json();
-        setPlans(plans);
-      } catch (error) {
-        console.log("Error during the fetching the plan", error);
-      }
-    };
-    fetchProducts();
-  }, [plans]);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`);
+  //       const {plans} = await res.json();
+  //       setPlans(plans);
+  //     } catch (error) {
+  //       console.log("Error during the fetching the plan", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, [plans]);
 
    return (
     <section className="mt-5 w-full py-14 md:py-28 px-5">

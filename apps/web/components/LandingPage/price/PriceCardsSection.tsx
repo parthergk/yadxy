@@ -4,24 +4,25 @@ import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import CTA from "../CTA";
 import PriceCard from "../Cards/PriceCard";
-import { IPlan } from "@repo/types";
-const PriceCardsSection = () => {
-  const [plans, setPlans] = useState<IPlan[]>([]);
+// import { IPlan } from "@repo/types";
+import { plans } from "../../../helpers/Plans";
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`
-        );
-        const { plans } = await res.json();
-        setPlans(plans);
-      } catch (error) {
-        console.log("Error during the fetching the plan", error);
-      }
-    };
-    fetchProducts();
-  }, [plans]);
+const PriceCardsSection = () => {
+  
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`
+  //       );
+  //       const { plans } = await res.json();
+  //       setPlans(plans);
+  //     } catch (error) {
+  //       console.log("Error during the fetching the plan", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, [plans]);
   return (
     <>
       {/* Hero Section */}

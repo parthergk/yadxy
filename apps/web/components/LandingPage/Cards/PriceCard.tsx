@@ -3,10 +3,11 @@ import { CircleCheck } from "lucide-react";
 import React from "react";
 import { motion } from "motion/react";
 import { IPlan } from "@repo/types";
+import { Plan } from "../../../helpers/Plans";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-const PriceCard: React.FC<IPlan> = ({
+const PriceCard: React.FC<Plan> = ({
   type,
   title,
   price,

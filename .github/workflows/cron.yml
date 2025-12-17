@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Run Cron Job
         run: |
-          curl -X POST https://yadxy.onrender.com/api/v1/cron/run \
+          curl -X POST https://api.yadxy.com/api/v1/cron/run \
           -H "Content-Type: application/json" \
           -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
           -d '{"job":"monthly-fees"}'
