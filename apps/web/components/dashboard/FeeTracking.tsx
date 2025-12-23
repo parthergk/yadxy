@@ -4,6 +4,7 @@ import MarkAsPaid from "../student/MarkAsPaid";
 
 interface RawFeeRecord {
   _id: string;
+  name: string;
   amount: number;
   paidAmount: number;
   status: "paid" | "pending" | "overdue";
@@ -17,6 +18,7 @@ interface RawFeeRecord {
 
 interface ProcessedFeeRecord {
   id: string;
+  name: string;
   month: string;
   paidAmount: number;
   unpaid: number;
@@ -27,7 +29,10 @@ interface ProcessedFeeRecord {
 }
 
 interface GroupedStudentData {
-  [studentName: string]: ProcessedFeeRecord[];
+  [studentId: string]: {
+    studentName: string;
+    studentRecords: ProcessedFeeRecord[];
+  };
 }
 
 const FeeTracking: React.FC = () => {
@@ -56,34 +61,42 @@ const FeeTracking: React.FC = () => {
       }
 
       const result = await response.json();
-      
+
       if (!result.success) {
-        setError(result.error)
+        setError(result.error);
       }
 
       const groupedData = result.data.reduce(
         (acc: GroupedStudentData, record: RawFeeRecord) => {
-          const studentName = record.studentId?.name || "Unknown Student";
+          const studentId = record.studentId?._id || "Unknown Student";
+          const name = record.studentId.name
 
-          if (!acc[studentName]) acc[studentName] = [];
+          if (!acc[studentId]) acc[studentId] = {
+            studentName: name,
+            studentRecords: []
+          };
 
-          acc[studentName].push({
-            id: record._id,
-            month: new Date(record.dueDate).toLocaleString("default", {
-              month: "long",
-            }),
-            paidAmount: record.paidAmount || 0,
-            unpaid: record.status === "pending" ? record.amount : 0,
-            overdue: record.status === "overdue" ? record.amount : 0,
-            amount: record.amount,
-            status: record.status,
-            paymentDate: record.paidDate?.split("T")[0] ?? null,
-          });
+          acc[studentId].studentRecords.push(
+            {
+              id: record._id,
+              name: record.name,
+              month: new Date(record.dueDate).toLocaleString("default", {
+                month: "long",
+              }),
+              paidAmount: record.paidAmount || 0,
+              unpaid: record.status === "pending" ? record.amount : 0,
+              overdue: record.status === "overdue" ? record.amount : 0,
+              amount: record.amount,
+              status: record.status,
+              paymentDate: record.paidDate?.split("T")[0] ?? null
+            }
+          );
 
           return acc;
         },
         {}
       );
+      console.log("grouped data", groupedData);
 
       setFeeRecords(groupedData);
     } catch (err: any) {
@@ -139,7 +152,7 @@ const FeeTracking: React.FC = () => {
                 className="w-full border-collapse text-sm"
               >
                 <caption className="text-lg font-semibold mb-1 text-heading text-start">
-                  {studentName}
+                  {records.studentName}
                 </caption>
 
                 <thead className="text-left border-b border-neutral-300">
@@ -154,7 +167,7 @@ const FeeTracking: React.FC = () => {
                 </thead>
 
                 <tbody>
-                  {records.map((fee, i) => (
+                  {records.studentRecords.map((fee, i) => (
                     <tr
                       key={i}
                       className="border-b border-neutral-300 last:border-none"
@@ -202,19 +215,19 @@ const FeeTracking: React.FC = () => {
                     <td className="py-3 px-3 font-semibold">Total</td>
                     <td className="py-3 px-3">
                       ₹
-                      {records
+                      {records.studentRecords
                         .reduce((s, r) => s + r.paidAmount, 0)
                         .toLocaleString()}
                     </td>
                     <td className="py-3 px-3">
                       ₹
-                      {records
+                      {records.studentRecords
                         .reduce((s, r) => s + r.unpaid, 0)
                         .toLocaleString()}
                     </td>
                     <td className="py-3 px-3">
                       ₹
-                      {records
+                      {records.studentRecords
                         .reduce((s, r) => s + r.overdue, 0)
                         .toLocaleString()}
                     </td>
