@@ -116,8 +116,8 @@ const Dashboard = () => {
         </div>
       )}
       <div className=" grid grid-cols-1 sm:grid-cols-2  gap-5">
-       { dashboardData?.recentActivity && <ActivityCard activity={dashboardData?.recentActivity} />}
-        { dashboardData?.upcomingDues && <Upcoming upcomingDues={dashboardData?.upcomingDues} />}
+       { dashboardData?.recentActivity ? <ActivityCard activity={dashboardData?.recentActivity} /> : <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>}
+        { dashboardData?.upcomingDues ? <Upcoming upcomingDues={dashboardData?.upcomingDues} /> : <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>}
       </div>
     </>
   );

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { MenuIcon, X } from "lucide-react";
 import { motion, Variants } from "motion/react";
-import Image from "next/image";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
