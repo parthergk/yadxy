@@ -6,6 +6,7 @@ import { useOverDue } from "../../context/OverDueProvider";
 
 interface DashboardData {
   recentActivity: {
+    id: string;
     name: string;
     amount: number;
     paidDate: string;

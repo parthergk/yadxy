@@ -59,13 +59,16 @@ const Students = () => {
     try {
       setError(null);
       setIsLoading(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/student`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/student`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("No students found. Please try again later.");
@@ -96,7 +99,7 @@ const Students = () => {
       <div className=" flex justify-between items-center">
         <button
           onClick={handleAddStudent}
-          className=" bg-primary text-white py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-md shadow-md cursor-pointer"
+          className=" bg-primary hover:bg-[#ea580c] hover:scale-105 transition text-white py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-md shadow-md cursor-pointer"
         >
           Add Student
         </button>
@@ -156,27 +159,36 @@ const Students = () => {
                         });
                         setIsUpdate(true);
                       }}
-                      className=" text-sub hover:underline text-sm cursor-pointer"
+                      className=" relative text-sub hover:underline text-sm cursor-pointer group"
                     >
                       <Pen className=" h-4 w-4" />
+                      <span className="px-2 bottom-3 left-1 absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Edit
+                      </span>
                     </button>
                     <button
                       onClick={() => {
                         setIsDelete(true);
                         setStudent({ id: student._id, name: student.name });
                       }}
-                      className="text-red-600 hover:underline text-sm cursor-pointer"
+                      className="relative text-red-600 hover:underline text-sm cursor-pointer group"
                     >
                       <Trash2 className=" h-4 w-4" />
+                      <span className="px-2 bottom-3 left-1 absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Delete
+                      </span>
                     </button>
                     <button
                       disabled={student.status.toLowerCase() === "paid"}
                       onClick={() => {
                         (setOpenMark(true), setFeeId(student.feeId));
                       }}
-                      className={`text-sub hover:underline text-sm ${student.status.toLowerCase() === "paid" ? "cursor-not-allowed" : "cursor-pointer"}`}
+                      className={`relative text-sub hover:underline text-sm group ${student.status.toLowerCase() === "paid" ? "cursor-not-allowed" : "cursor-pointer"}`}
                     >
                       <BadgeCheck className=" h-4 w-4" />
+                      <span className="px-2 bottom-3 left-1 absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Mark
+                      </span>
                     </button>
                   </div>
                 </li>

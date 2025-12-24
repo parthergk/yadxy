@@ -146,9 +146,9 @@ const FeeTracking: React.FC = () => {
       <div className=" w-full mt-8 overflow-x-auto min-h-80 ">
         <div className=" w-full h-full  px-2 min-w-[810px] md:min-w-[600px] sm:max-h-80 overflow-y-auto space-y-3">
           {filteredData.length !== 0 ? (
-            filteredData.map(([studentName, records]) => (
+            filteredData.map(([studentId, records]) => (
               <table
-                key={studentName}
+                key={studentId}
                 className="w-full border-collapse text-sm"
               >
                 <caption className="text-lg font-semibold mb-1 text-heading text-start">
