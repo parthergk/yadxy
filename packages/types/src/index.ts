@@ -10,19 +10,26 @@ export interface IUser {
   profileComplete: boolean;
   tuitionClassName: string;
 
-  verificationToken: string | null
+  verificationToken: string | null;
   verifyCode: string;
   verifyCodePurpose: string;
   verifyCodeExpires: number;
 
-  planId?: mongoose.ObjectId;
-  planType: "free" | "pro" | "custom";
-  planStatus: "active" | "expired" | "canceled";
-  planActivatedAt: Date;
-  planExpiresAt: Date;
-  studentLimit: number;
-  planPrice: number;
-  isPremiumActive: boolean;
+  plan: {
+    currentPlanId: mongoose.ObjectId;
+
+    trial: {
+      status: "not_started" | "active" | "expired";
+      startedAt?: Date | null;
+      endsAt?: Date | null;
+    };
+
+    subscription: {
+      status: "NONE" | "ACTIVE" | "CANCELLED";
+      startedAt?: Date | null;
+      endsAt?: Date | null;
+    };
+  };
 
   createdAt: Date;
   updatedAt: Date;
@@ -47,16 +54,16 @@ export interface IStudent {
 
 export interface IPlan {
   _id: mongoose.Types.ObjectId;
-  type: "free" | "pro" | "custom";
+  code: "free" | "pro" | "custom";
   price: number;
   studentLimit: number | null;
   durationDays: number;
   title: string;
   description: string;
-  features?: string[]; 
-  buttonText?: string; 
+  features?: string[];
+  buttonText?: string;
   highlight?: boolean;
-  isActive:boolean;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -105,9 +112,9 @@ export interface IFeePayment {
 }
 
 export interface IContact {
-  _id:mongoose.ObjectId;
+  _id: mongoose.ObjectId;
   name: string;
-  email:string;
+  email: string;
   subject: string;
   message: string;
   createdAt: Date;

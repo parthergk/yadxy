@@ -17,28 +17,39 @@ const userSchema = new Schema<IUser>(
     verifyCodePurpose: { type: String },
     verifyCodeExpires: { type: Number },
 
-    planId: { type: mongoose.Types.ObjectId, ref: "Plan" },
-    planType: {
-      type: String,
-      enum: ["free", "pro"],
-      default: "free",
-    },
-    planStatus: {
-      type: String,
-      enum: ["active", "expired"],
-      default: "active",
-    },
-    planActivatedAt: { type: Date, default: () => new Date() },
-    planExpiresAt: { type: Date, default: null },
-    studentLimit: { type: Number, default: 20 },
-    planPrice: { type: Number, default: 0 },
-    isPremiumActive: {type: Boolean, default:false}
+    plan: {
+      currentPlanId: {
+        type: mongoose.Types.ObjectId,
+        ref: "Plan",
+        required: true
+      },
+
+      trial: {
+        status: {
+          type: String,
+          enum: ["not_started", "active", "expired"],
+          default: "not_started"
+        },
+        startedAt: { type: Date, default: null },
+        endsAt: { type: Date, default: null }
+      },
+
+      subscription: {
+        status: {
+          type: String,
+          enum: ["NONE", "ACTIVE", "CANCELLED"],
+          default: "NONE"
+        },
+        startedAt: { type: Date, default: null },
+        endsAt: { type: Date, default: null }
+      }
+    }
   },
   { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
+  if (this.isModified("password") && this.password) {
     this.password = await bcryptjs.hash(this.password, 10);
   }
   next();

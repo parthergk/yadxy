@@ -3,7 +3,7 @@ import { IPlan } from "@repo/types";
 
 const plansSchema = new Schema<IPlan>(
   {
-    type: {
+    code: {
       type: String,
       enum: ["free", "pro"],
       default: "free",

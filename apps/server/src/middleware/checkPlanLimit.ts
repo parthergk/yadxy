@@ -1,4 +1,4 @@
-import { Student, User } from "@repo/db";
+import { Plan, Student, User } from "@repo/db";
 import { NextFunction, Request, Response } from "express";
 
 async function checkPlanLimit(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +13,7 @@ async function checkPlanLimit(req: Request, res: Response, next: NextFunction) {
 
   try {
     
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("plan.currentPlanId").lean();
 
     if (!user) {
        res.status(404).json({
@@ -22,17 +22,25 @@ async function checkPlanLimit(req: Request, res: Response, next: NextFunction) {
       return;
     }
 
-    if (user.studentLimit === null || user.studentLimit === undefined) {
+     const now = new Date();
+
+    let effectivePlan = user.plan.currentPlanId as any;
+
+    if (user.plan.trial.status==="active" && user.plan.trial.endsAt && user.plan.trial.endsAt > now) {
+     effectivePlan = await Plan.findOne({code: "pro", isActive: true}).lean() 
+    }
+
+    if (effectivePlan.studentLimit === null || effectivePlan.studentLimit === undefined) {
       return next();
     }
     
     const studentCount = await Student.countDocuments({ teacherId: userId });
 
-    if (studentCount >= user.studentLimit) {
+    if (studentCount >= effectivePlan.studentLimit) {
        res.status(403).json({
-        error: `You have reached your plan limit (${user.studentLimit} students). Upgrade your plan to add more students.`,
+        error: `You have reached your plan limit (${effectivePlan.studentLimit} students). Upgrade your plan to add more students.`,
         currentStudents: studentCount,
-        maxStudents: user.studentLimit
+        maxStudents: effectivePlan.studentLimit
       });
       return;
     }

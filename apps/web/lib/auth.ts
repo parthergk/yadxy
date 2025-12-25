@@ -149,18 +149,18 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
-  cookies: {
-  sessionToken: {
-    name: "__Secure-next-auth.session-token",
-    options: {
-      httpOnly: true,
-      domain: ".yadxy.com",
-      sameSite: "lax",
-      secure: true,
-      path: "/",
-    },
-  },
-},
+//   cookies: {
+//   sessionToken: {
+//     name: "__Secure-next-auth.session-token",
+//     options: {
+//       httpOnly: true,
+//       domain: ".yadxy.com",
+//       sameSite: "lax",
+//       secure: true,
+//       path: "/",
+//     },
+//   },
+// },
 
 
   pages: {

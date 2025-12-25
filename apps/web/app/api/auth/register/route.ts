@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserSchema } from "@repo/validation/types";
-import { connectTodb, User } from "@repo/db";
+import { connectTodb, Plan, User } from "@repo/db";
 import { sendVerificationEmail } from "../../../../helpers/sendOTP";
 import jwt from "jsonwebtoken";
 
@@ -32,12 +32,22 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
+    const freePlan = await Plan.findOne({code:"free", isActive: true})
 
     const user = await User.create({
       email: parsedBody.data.email,
       password: parsedBody.data.password,
       isVerified: false,
-      verifyCodePurpose: "register"
+      verifyCodePurpose: "register",
+      plan:{
+        currentPlanId: freePlan?.id,
+        trial: {
+          status: "not_started"
+        },
+        subscription: {
+          status: "NONE"
+        }
+      }
     });
 
     const token = jwt.sign(
@@ -71,7 +81,7 @@ export async function POST(req: NextRequest) {
           id: user._id,
           email: user.email,
           name: user.name,
-          plan: user.planType,
+          plan: freePlan?.code,
         },
       },
       { status: 201 }
