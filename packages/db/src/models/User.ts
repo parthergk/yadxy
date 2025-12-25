@@ -27,8 +27,8 @@ const userSchema = new Schema<IUser>(
       trial: {
         status: {
           type: String,
-          enum: ["not_started", "active", "expired"],
-          default: "not_started"
+          enum: ["active", "expired"],
+          default: "active"
         },
         startedAt: { type: Date, default: null },
         endsAt: { type: Date, default: null }
@@ -37,7 +37,7 @@ const userSchema = new Schema<IUser>(
       subscription: {
         status: {
           type: String,
-          enum: ["NONE", "ACTIVE", "CANCELLED"],
+          enum: ["NONE", "ACTIVE", "EXPIRED"],
           default: "NONE"
         },
         startedAt: { type: Date, default: null },

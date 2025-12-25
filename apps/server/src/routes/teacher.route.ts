@@ -1,37 +1,81 @@
-import { User } from "@repo/db";
+import { User, Plan } from "@repo/db";
 import { Request, Response, Router } from "express";
 import { verifyJwt } from "../middleware/verifyJwt";
+import { getTodayDate } from "../utils/dateUtils";
 
 const teacherRouter: Router = Router();
 
 teacherRouter.get("/", verifyJwt, async (req: Request, res: Response) => {
-  const { id: userId } = req.user;
-
   try {
-    const teacher = await User.findById(userId).select(
-      "name email phone tuitionClassName planType planStatus planPrice studentLimit planActivatedAt planExpiresAt"
-    );
+    const userId = req.user.id;
+    const now = getTodayDate();
 
-    if (!teacher) {
+    const user = await User.findById(userId)
+      .select("name email phone tuitionClassName plan")
+      .populate("plan.currentPlanId")
+      .lean();
+
+    if (!user) {
       res.status(404).json({
         success: false,
-        message: "Teacher not found. Please check your account.",
+        message: "Teacher not found.",
       });
       return;
     }
 
-     res.status(200).json({
+    const freePlan = user.plan.currentPlanId as any;
+    const proPlan = await Plan.findOne({ code: "pro", isActive: true }).lean();
+
+    let effectivePlan = freePlan;
+    let status: "FREE" | "TRIAL" | "PAID" = "FREE"
+    let activatedAt: Date | null = null;
+    let expiresAt: Date | null = null;
+
+    if (
+      user.plan.subscription.status === "ACTIVE" &&
+      user.plan.subscription.startedAt &&
+      user.plan.subscription.endsAt
+    ) {
+      effectivePlan = proPlan;
+      activatedAt = user.plan.subscription.startedAt;
+      expiresAt = user.plan.subscription.endsAt;
+      status = "PAID"
+    } else if (
+      user.plan.trial.status === "active" &&
+      user.plan.trial?.startedAt && user.plan.trial.endsAt &&
+      user.plan.trial.endsAt > now
+    ) {
+      effectivePlan = proPlan
+      activatedAt = user.plan.trial.startedAt
+      expiresAt = user.plan.trial.endsAt
+      status = "TRIAL"
+    }
+
+    res.status(200).json({
       success: true,
       message: "Teacher profile fetched successfully.",
-      data: teacher,
+      data: {
+        user: {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          tuitionClassName: user.tuitionClassName,
+        },
+        plan: {
+          title: status === "TRIAL" ? `${effectivePlan.title} (Trial)` : effectivePlan.title,
+          price: effectivePlan.price,
+          studentLimit: effectivePlan.studentLimit,
+          activatedAt,
+          expiresAt,
+        },
+      },
     });
     return;
   } catch (error) {
-    console.error("Error fetching teacher profile:", error);
-     res.status(500).json({
+    console.error("Teacher profile error:", error);
+    res.status(500).json({
       success: false,
-      message:
-        "Something went wrong while fetching your profile. Please try again later.",
+      message: "Failed to fetch profile. Please try again later.",
     });
     return;
   }

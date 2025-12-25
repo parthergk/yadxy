@@ -1,5 +1,6 @@
 import { Plan, Student, User } from "@repo/db";
 import { NextFunction, Request, Response } from "express";
+import { getTodayDate } from "../utils/dateUtils";
 
 async function checkPlanLimit(req: Request, res: Response, next: NextFunction) {
   const userId = req.user?.id;
@@ -22,7 +23,7 @@ async function checkPlanLimit(req: Request, res: Response, next: NextFunction) {
       return;
     }
 
-     const now = new Date();
+     const now = getTodayDate();
 
     let effectivePlan = user.plan.currentPlanId as any;
 

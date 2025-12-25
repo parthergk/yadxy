@@ -15,12 +15,16 @@ const Profile = () => {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/teacher`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/teacher`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
       const result = await response.json();
+      console.log("Teacher in frontend", result);
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to load profile.");

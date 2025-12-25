@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
     }
     const freePlan = await Plan.findOne({code:"free", isActive: true})
 
+    const now = new Date();
+
     const user = await User.create({
       email: parsedBody.data.email,
       password: parsedBody.data.password,
@@ -42,10 +44,8 @@ export async function POST(req: NextRequest) {
       plan:{
         currentPlanId: freePlan?.id,
         trial: {
-          status: "not_started"
-        },
-        subscription: {
-          status: "NONE"
+          startedAt: now,
+          endsAt: now.setDate(now.getDate()+45)
         }
       }
     });

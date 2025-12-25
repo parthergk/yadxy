@@ -1,7 +1,7 @@
-// import cron from "node-cron";
+import cron from "node-cron";
 // import { cronJobs } from "./AutomationService";
-// import { Student, User } from "@repo/db";
-// import { getTodayDate } from "../utils/dateUtils";
+import { Plan, Student, User } from "@repo/db";
+import { getTodayDate } from "../utils/dateUtils";
 
 // cron.schedule("04 21 * * *", cronJobs.generateMonthlyFees, {
 //   timezone: "Asia/Kolkata",
@@ -11,28 +11,38 @@
 //   timezone: "Asia/Kolkata",
 // });
 
-// cron.schedule("26 16 * * *", async () => {
-//   console.log("plan downgrader");
-  
-//   const now = getTodayDate();
-//   const teachers = await User.find({
-//     planType: "pro",
-//     planExpiresAt: {$lt:now}
-//   });
+cron.schedule(
+  "26 16 * * *",
+  async () => {
+    console.log("plan downgrader");
 
-//   for(const teacher of teachers){
-//     teacher.planStatus = "expired";
-//     teacher.isPremiumActive = false;
+    const now = getTodayDate();
 
-//     const students = await Student.find({
-//       teacherId: teacher.id
-//     });
+    await User.updateMany(
+      {
+        "plan.trial.status": "active",
+        "plan.trial.endsAt": { $lt: now },
+      },
+      {
+        $set: { "plan.trial.status": "expired" },
+      }
+    );
 
-//     for(const student of students){
-//       student.stopReminder = true;
-//     };
-    
-//     await teacher.save();
-//     // sendEmail(user.email, "Your Yadxy plan has expired...");
-//   }
-// }, {});
+    const FREE_PLAN_ID = await Plan.findOne({ code: "free" });
+    await User.updateMany(
+      {
+        "plan.subscription.status": "ACTIVE",
+        "plan.subscription.endsAt": { $lt: new Date() },
+      },
+      {
+        $set: {
+          "plan.subscription.status": "EXPIRED",
+          "plan.currentPlanId": FREE_PLAN_ID,
+        },
+      }
+    );
+
+    //     await teacher.save();
+    //     // sendEmail(user.email, "Your Yadxy plan has expired...");
+    //   }
+  },{});

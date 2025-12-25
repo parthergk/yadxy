@@ -73,6 +73,7 @@ paymentRouter.post("/", async (req: Request, res: Response) => {
           "plan.subscription.status": "ACTIVE",
           "plan.subscription.startedAt": getTodayDate(),
           "plan.subscription.endsAt": expiresAt,
+          "plan.trial.status": "expired"
         },
       });
 
