@@ -122,7 +122,7 @@ planRouter.put("/:id", async (req: Request, res: Response) => {
        return;
     }
 
-    plan.type = type;
+    plan.code = type;
     plan.price = price;
     plan.studentLimit = studentLimit;
 

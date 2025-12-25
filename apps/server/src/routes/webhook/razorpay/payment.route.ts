@@ -67,21 +67,21 @@ paymentRouter.post("/", async (req: Request, res: Response) => {
         expiresAt.setDate(expiresAt.getDate() + plan.durationDays);
       }
 
-       await User.findByIdAndUpdate(user?._id, {
-        planType: plan?.type,
-        planStatus: "active",
-        studentLimit: plan?.studentLimit ?? null,
-        planActivatedAt: getTodayDate(),
-        planExpiresAt: expiresAt,
-        isPremiumActive: true
+      await User.findByIdAndUpdate(user?._id, {
+        $set: {
+          "plan.currentPlanId": plan._id,
+          "plan.subscription.status": "ACTIVE",
+          "plan.subscription.startedAt": getTodayDate(),
+          "plan.subscription.endsAt": expiresAt,
+        },
       });
 
       const studetns = await Student.find({
-        teacherId: user._id
-      })
+        teacherId: user._id,
+      });
 
-      for(const student of studetns){
-        student.stopReminder= false
+      for (const student of studetns) {
+        student.stopReminder = false;
       }
 
       // console.log("User email:", order.userId?.email);
