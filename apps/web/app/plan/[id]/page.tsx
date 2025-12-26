@@ -27,7 +27,7 @@ const page = () => {
   }, [params?.id]);
 
   async function handlePurchase() {
-    if (plan?.type === "free") {
+    if (plan?.code === "free") {
       router.push("/register");
       return;
     }
@@ -60,7 +60,7 @@ const page = () => {
         amount: order.amount,
         currency: "INR",
         name: "FeeTrack",
-        description: `${plan.type}`,
+        description: `${plan.code}`,
         order_id: order.orderId,
         handler: function () {
           // Do NOT verify here (pure webhook). Just go to status page.
@@ -88,7 +88,7 @@ const page = () => {
 
   return (
     <div className=" w-screen h-screen bg-gray-700 text-white">
-      <h1>{plan?.type}</h1>
+      <h1>{plan?.code}</h1>
       <p>Price: ₹{plan?.price}</p>
       <button className=" border px-2 cursor-pointer" onClick={handlePurchase}>
         Purchase

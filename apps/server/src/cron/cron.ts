@@ -11,26 +11,43 @@ export async function runSendFeeReminders() {
 }
 
 export async function runPlanDowngrade() {
-  console.log("plan downgrader");
+  console.log("[CRON] Plan downgrade started");
 
   const now = getTodayDate();
+
   const teachers = await User.find({
-    planType: "pro",
-    planExpiresAt: { $lt: now },
+    $or: [
+      { "plan.trial.status": "active" },
+      { "plan.subscription.status": "ACTIVE" },
+    ],
   });
 
   for (const teacher of teachers) {
-    teacher.planStatus = "expired";
-    teacher.isPremiumActive = false;
+    let hasChanged = false;
 
-    const students = await Student.find({
-      teacherId: teacher.id,
-    });
-
-    for (const student of students) {
-      student.stopReminder = true;
+    if (
+      teacher.plan.trial.status === "active" &&
+      teacher.plan.trial.endsAt &&
+      teacher.plan.trial.endsAt < now
+    ) {
+      teacher.plan.trial.status = "expired";
+      hasChanged = true;
     }
 
-    await teacher.save();
+    if (
+      teacher.plan.subscription.status === "ACTIVE" &&
+      teacher.plan.subscription.endsAt &&
+      teacher.plan.subscription.endsAt < now
+    ) {
+      teacher.plan.subscription.status = "EXPIRED";
+      hasChanged = true;
+    }
+
+    if (hasChanged) {
+      await teacher.save();
+    }
   }
+
+  console.log("[CRON] Plan downgrade completed");
 }
+

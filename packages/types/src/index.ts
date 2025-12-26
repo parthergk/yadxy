@@ -25,7 +25,7 @@ export interface IUser {
     };
 
     subscription: {
-      status: "NONE" | "ACTIVE" | "CANCELLED";
+      status: "NONE" | "ACTIVE" | "EXPIRED";
       startedAt?: Date | null;
       endsAt?: Date | null;
     };
