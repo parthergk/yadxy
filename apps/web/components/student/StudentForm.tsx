@@ -52,7 +52,7 @@ const StudentForm: React.FC<PropInter> = ({ isOpen, setIsOpen, fetchData }) => {
       setTimeout(() => {
         setMessage(null);
         setIsOpen(false);
-      }, 5000);
+      }, 1000);
     } catch (err) {
       setMessage({
         type: "error",

@@ -7,10 +7,8 @@ import User from "../../../components/User";
 import Dashboard from "../../../components/dashboard/Dashboard";
 import { OverdueProvider } from "../../../context/OverDueProvider";
 import { FeeRecordProvider } from "../../../context/FeeRecordProvider";
-import UpgradePlan from "../../../components/UpgradePlan";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import UpgradePlanError from "../../../components/UpgradePlanError";
 const Students = lazy(() => import("../../../components/dashboard/Students"));
 const FeeTracking = lazy(
   () => import("../../../components/dashboard/FeeTracking")
@@ -104,12 +102,11 @@ export default function DashboardPage() {
               <p className="text-sm md:text-base lg:text-lg text-sub mt-1">
                 Track your students’ fee status and manage your profile
               </p>
-              <div className=" flex items-en">
+              {/* <div className=" flex items-en">
                 {session?.user.planStatus === "expired" && <UpgradePlanError />}
-              </div>
+              </div> */}
             </div>
           </div>
-          <UpgradePlan />
           <FeeRecordProvider>
             <OverdueProvider>
               {sections.map(

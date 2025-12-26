@@ -69,34 +69,32 @@ const FeeTracking: React.FC = () => {
       const groupedData = result.data.reduce(
         (acc: GroupedStudentData, record: RawFeeRecord) => {
           const studentId = record.studentId?._id || "Unknown Student";
-          const name = record.studentId.name
+          const name = record.studentId.name;
 
-          if (!acc[studentId]) acc[studentId] = {
-            studentName: name,
-            studentRecords: []
-          };
+          if (!acc[studentId])
+            acc[studentId] = {
+              studentName: name,
+              studentRecords: [],
+            };
 
-          acc[studentId].studentRecords.push(
-            {
-              id: record._id,
-              name: record.name,
-              month: new Date(record.dueDate).toLocaleString("default", {
-                month: "long",
-              }),
-              paidAmount: record.paidAmount || 0,
-              unpaid: record.status === "pending" ? record.amount : 0,
-              overdue: record.status === "overdue" ? record.amount : 0,
-              amount: record.amount,
-              status: record.status,
-              paymentDate: record.paidDate?.split("T")[0] ?? null
-            }
-          );
+          acc[studentId].studentRecords.push({
+            id: record._id,
+            name: record.name,
+            month: new Date(record.dueDate).toLocaleString("default", {
+              month: "long",
+            }),
+            paidAmount: record.paidAmount || 0,
+            unpaid: record.status === "pending" ? record.amount : 0,
+            overdue: record.status === "overdue" ? record.amount : 0,
+            amount: record.amount,
+            status: record.status,
+            paymentDate: record.paidDate?.split("T")[0] ?? null,
+          });
 
           return acc;
         },
         {}
       );
-      console.log("grouped data", groupedData);
 
       setFeeRecords(groupedData);
     } catch (err: any) {
@@ -111,8 +109,8 @@ const FeeTracking: React.FC = () => {
     fetchRecord();
   }, []);
 
-  const filteredData = Object.entries(feeRecords).filter(([studentName]) =>
-    studentName.toLowerCase().includes(input.toLowerCase())
+  const filteredData = Object.entries(feeRecords).filter((student) =>
+    student[1].studentName.toLowerCase().includes(input.toLowerCase())
   );
 
   if (loading) {
@@ -147,10 +145,7 @@ const FeeTracking: React.FC = () => {
         <div className=" w-full h-full  px-2 min-w-[810px] md:min-w-[600px] sm:max-h-80 overflow-y-auto space-y-3">
           {filteredData.length !== 0 ? (
             filteredData.map(([studentId, records]) => (
-              <table
-                key={studentId}
-                className="w-full border-collapse text-sm"
-              >
+              <table key={studentId} className="w-full border-collapse text-sm">
                 <caption className="text-lg font-semibold mb-1 text-heading text-start">
                   {records.studentName}
                 </caption>

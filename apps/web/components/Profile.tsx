@@ -18,7 +18,7 @@ const Profile: React.FC<ProfileProps> = ({ isShow }) => {
         isShow ? "block" : "hidden"
       } absolute -right-1 top-14 p-3 flex flex-col gap-2.5 sm:gap-1.5  bg-gradient-to-br from-[#F0F4FF] via-[#ebe3ff] to-[#f0ebfd] rounded-lg border border-gray-200 shadow-sm`}
     >
-      <div className="flex flex-col px-1 py-1 rounded-md transition-colors mb-1">
+      <div className="flex flex-col px-1 py-1 rounded-md transition-colors ">
         <h1 className="text-lg sm:text-xl md:text-2xl text-heading self-start">
           {session.data?.user.name}
         </h1>
@@ -29,7 +29,7 @@ const Profile: React.FC<ProfileProps> = ({ isShow }) => {
 
       <div
         onClick={() => router.push("/profile_settings")}
-        className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 px-1.5 rounded-md transition-colors"
+        className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 my-1 px-1.5 py-1 rounded-md transition-colors"
       >
         <UserCircle2 className="h-5 w-5 text-gray-600" />
         <h1 className="text-sm md:text-[15px] lg:text-base font-medium text-sub">
