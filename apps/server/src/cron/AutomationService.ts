@@ -3,6 +3,7 @@ import {
   FeePayment,
   NotificationLog,
   Student,
+  User,
 } from "@repo/db";
 import { smsSender } from "../lib/twilioClient";
 import { whatsappSender } from "../lib/whatsappClient";
@@ -14,9 +15,27 @@ export class FeeAutomationService {
     const today = getTodayDate();
     await connectTodb();
 
-    const activeStudents = await Student.find({ isActivate: true });
+    const expiredTeachers = await User.find({
+      "plan.trial.status": { $eq: "expired" },
+      "plan.subscription.status": { $ne: "ACTIVE" },
+    }).select("_id");
 
-    for (const student of activeStudents) {
+    const teacherIds = expiredTeachers.map((t) => t._id);
+
+    const blockedTeacherAgg = await Student.aggregate([
+      { $match: { teacherId: { $in: teacherIds } } },
+      { $group: { _id: "$teacherId", studentCount: { $sum: 1 } } },
+      { $match: { studentCount: { $gt: 20 } } },
+    ]);
+
+    const blockedTeacherIds = blockedTeacherAgg.map((t) => t._id);
+
+    const students = await Student.find({
+      isActivate: true,
+      teacherId: { $nin: blockedTeacherIds },
+    });
+
+    for (const student of students) {
       const shouldGenerate = await this.shouldGenerateNewFee(student, today);
       console.log("Should generate new fee record", shouldGenerate);
       if (shouldGenerate) {
@@ -28,10 +47,6 @@ export class FeeAutomationService {
   private static async shouldGenerateNewFee(student: IStudent, today: Date) {
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
-
-    if (student.stopReminder) {      
-      return false;
-    }
 
     const feeExists = await FeePayment.findOne({
       studentId: student._id,

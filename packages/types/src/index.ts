@@ -47,7 +47,6 @@ export interface IStudent {
   joinDate: Date;
   feeDay: number;
   lastFeeDueDate: Date;
-  stopReminder: Boolean;
   createdAt: Date;
   updatedAt: Date;
 }
