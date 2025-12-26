@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
         currentPlanId: freePlan?.id,
         trial: {
           startedAt: now,
-          endsAt: now.setDate(now.getDate()+45)
+          endsAt: new Date().setDate(now.getDate()+45)
         }
       }
     });

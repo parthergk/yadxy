@@ -27,7 +27,7 @@ teacherRouter.get("/", verifyJwt, async (req: Request, res: Response) => {
     const proPlan = await Plan.findOne({ code: "pro", isActive: true }).lean();
 
     let effectivePlan = freePlan;
-    let status: "FREE" | "TRIAL" | "PAID" = "FREE"
+    let type: "FREE" | "TRIAL" | "PAID" = "FREE";
     let activatedAt: Date | null = null;
     let expiresAt: Date | null = null;
 
@@ -39,7 +39,7 @@ teacherRouter.get("/", verifyJwt, async (req: Request, res: Response) => {
       effectivePlan = proPlan;
       activatedAt = user.plan.subscription.startedAt;
       expiresAt = user.plan.subscription.endsAt;
-      status = "PAID"
+      type = "PAID"
     } else if (
       user.plan.trial.status === "active" &&
       user.plan.trial?.startedAt && user.plan.trial.endsAt &&
@@ -48,7 +48,7 @@ teacherRouter.get("/", verifyJwt, async (req: Request, res: Response) => {
       effectivePlan = proPlan
       activatedAt = user.plan.trial.startedAt
       expiresAt = user.plan.trial.endsAt
-      status = "TRIAL"
+      type = "TRIAL"
     }
 
     res.status(200).json({
@@ -62,7 +62,7 @@ teacherRouter.get("/", verifyJwt, async (req: Request, res: Response) => {
           tuitionClassName: user.tuitionClassName,
         },
         plan: {
-          title: status === "TRIAL" ? `${effectivePlan.title} (Trial)` : effectivePlan.title,
+          title: type === "TRIAL" ? `${effectivePlan.title} (Trial)` : effectivePlan.title,
           price: effectivePlan.price,
           studentLimit: effectivePlan.studentLimit,
           activatedAt,

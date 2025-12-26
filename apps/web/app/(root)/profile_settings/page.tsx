@@ -5,8 +5,23 @@ import PersonalInfoCard from "../../../components/dashboard/profile/PersonalInfo
 import PlanInfo from "../../../components/dashboard/profile/PlanInfo";
 import UpgradePlan from "../../../components/UpgradePlan";
 
+interface Teacher {
+  plan: {
+    title: string;
+    studentLimit: number;
+    activatedAt: string;
+    expiresAt: string;
+  };
+  user: {
+    name: string;
+    email: string;
+    phone: string;
+    tuitionClassName: string;
+  };
+}
+
 const Profile = () => {
-  const [teacher, setTeacher] = useState(null);
+  const [teacher, setTeacher] = useState<null | Teacher>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -24,7 +39,6 @@ const Profile = () => {
       );
 
       const result = await response.json();
-      console.log("Teacher in frontend", result);
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to load profile.");
@@ -65,8 +79,8 @@ const Profile = () => {
           <>
             <UpgradePlan />
             <div className="flex flex-col-reverse md:flex-row gap-5">
-              <PersonalInfoCard teacherInfo={teacher} />
-              <PlanInfo planInfo={teacher} />
+              <PersonalInfoCard teacherInfo={teacher.user} />
+              <PlanInfo planInfo={teacher.plan} />
             </div>
             <Password />
           </>
