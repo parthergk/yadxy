@@ -3,7 +3,7 @@ import { useOpenPlan } from "../context/OpenPlanProvider";
 import { X } from "lucide-react";
 import Plans from "./Plans";
 
-const UpgradePlan = () => {
+const UpgradePlan = ({ planType }: { planType: string }) => {
   const { isOpenPlans, setIsOpenPlans } = useOpenPlan();
   return (
     <>
@@ -21,7 +21,7 @@ const UpgradePlan = () => {
                 <X />
               </button>
             </div>
-            <Plans />
+            <Plans planType = {planType}/>
           </div>
         </div>
       )}

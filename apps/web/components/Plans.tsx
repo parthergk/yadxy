@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CircleCheck } from "lucide-react";
 
-const Plans = () => {
+const Plans = ({ planType }: { planType: string }) => {
   const router = useRouter();
   const [plans, setPlans] = useState<IPlan[]>([]);
   const session = useSession();
@@ -56,7 +56,7 @@ const Plans = () => {
         amount: order.amount,
         currency: "INR",
         name: "Yadxy",
-        description: `${plan.type}`,
+        description: `${plan.code}`,
         order_id: order.orderId,
         handler: async function (response: any) {
           const verifyRes = await fetch(
@@ -105,21 +105,14 @@ const Plans = () => {
           </div>
         ) : (
           plans.map((plan) => {
-            const userPlan = session.data?.user.plan;
-            const userPlanStatus = session.data?.user.planStatus;            
-            const isCurrent = userPlan === plan.type && userPlanStatus==="active";            
-            
-            // ✅ Disable logic:
-            // If user is on "Paid" (199) plan, disable all buttons (even Free)
-            // If user is on "Free", only allow upgrading (not re-subscribing)
-            const isDisabled =
-              isCurrent || (userPlan === "pro" && plan.type === "free");
-              
+            console.log("type",planType);
+            console.log("code",plan.code);
+
             return (
               <div
                 key={plan._id.toString()}
                 className={`w-full max-w-sm p-4 rounded-2xl border shadow-lg shadow-black/10 border-white/50 transition-transform hover:scale-105 ${
-                  isCurrent
+                  planType === "Free"
                     ? "bg-[linear-gradient(to_bottom_right,#FFFFFF_0%,#E0ECFF_25%,#EAE2FF_50%,#F8E8DB_75%,#FFFFFF_100%)]"
                     : "bg-[linear-gradient(to_bottom_right,#FFFFFF_0%,#F0F4FF_50%,#E8DFFF_100%)]"
                 }`}
@@ -155,18 +148,14 @@ const Plans = () => {
 
                 <button
                   onClick={() => handlePurchase(plan)}
-                  disabled={isDisabled}
-                  className={` mt-6 w-full py-2 rounded-lg font-medium transition-colors ${
-                    isDisabled
+                  disabled={planType === plan.title}
+                  className={`mt-6 w-full py-2 rounded-lg font-medium transition-colors ${
+                    planType === plan.title
                       ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                       : "bg-primary hover:bg-[#EA580C] text-white"
                   }`}
                 >
-                  {isCurrent
-                    ? "Your Current Plan"
-                    : userPlan === "pro" && plan.type === "free"
-                      ? "Not Available"
-                      : "Subscribe"}
+                  {planType === plan.title ? "Your Current Plan" : "Subscribe"}
                 </button>
               </div>
             );

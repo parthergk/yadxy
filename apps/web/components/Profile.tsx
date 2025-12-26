@@ -1,7 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import React from "react";
-import { Crown, UserCircle2 } from "lucide-react";
-import { useOpenPlan } from "../context/OpenPlanProvider";
+import { UserCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface ProfileProps {
@@ -10,7 +9,6 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ isShow }) => {
-  const { setIsOpenPlans } = useOpenPlan();
   const session = useSession();
   const router = useRouter();
 
@@ -36,17 +34,6 @@ const Profile: React.FC<ProfileProps> = ({ isShow }) => {
         <UserCircle2 className="h-5 w-5 text-gray-600" />
         <h1 className="text-sm md:text-[15px] lg:text-base font-medium text-sub">
           Profile
-        </h1>
-      </div>
-
-      <div
-        onClick={() => setIsOpenPlans((pre) => !pre)}
-        className=" flex items-center gap-3 cursor-pointer hover:bg-gray-100 px-1.5 py-1 rounded-md transition-colors"
-      >
-        <Crown className="h-5 w-5 text-gray-600" />
-
-        <h1 className="text-sm md:text-[15px] lg:text-base font-medium text-sub">
-          Upgrade
         </h1>
       </div>
 

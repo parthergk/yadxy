@@ -77,7 +77,7 @@ const Profile = () => {
 
         {teacher && (
           <>
-            <UpgradePlan />
+            <UpgradePlan planType = {teacher.plan.title}/>
             <div className="flex flex-col-reverse md:flex-row gap-5">
               <PersonalInfoCard teacherInfo={teacher.user} />
               <PlanInfo planInfo={teacher.plan} />
