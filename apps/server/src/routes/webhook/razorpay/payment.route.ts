@@ -77,16 +77,6 @@ paymentRouter.post("/", async (req: Request, res: Response) => {
         },
       });
 
-      const studetns = await Student.find({
-        teacherId: user._id,
-      });
-
-      for (const student of studetns) {
-        student.stopReminder = false;
-      }
-
-      // console.log("User email:", order.userId?.email);
-      // console.log("Plan:", order.planId?.name);
 
       // TODO: Send confirmation email
       // await sendPaymentConfirmationEmail(order.userId.email, order);

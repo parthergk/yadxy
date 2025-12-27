@@ -1,48 +1,61 @@
-import cron from "node-cron";
-// import { cronJobs } from "./AutomationService";
-import { Plan, Student, User } from "@repo/db";
-import { getTodayDate } from "../utils/dateUtils";
+// import cron from "node-cron";
+// // import { cronJobs } from "./AutomationService";
+// import { Plan, User } from "@repo/db";
+// import { getTodayDate } from "../utils/dateUtils";
 
-// cron.schedule("04 21 * * *", cronJobs.generateMonthlyFees, {
-//   timezone: "Asia/Kolkata",
-// });
+// // cron.schedule("04 21 * * *", cronJobs.generateMonthlyFees, {
+// //   timezone: "Asia/Kolkata",
+// // });
 
-// cron.schedule("05 21 * * *", cronJobs.sendsendFeeReminders, {
-//   timezone: "Asia/Kolkata",
-// });
+// // cron.schedule("05 21 * * *", cronJobs.sendsendFeeReminders, {
+// //   timezone: "Asia/Kolkata",
+// // });
 
-cron.schedule(
-  "26 16 * * *",
-  async () => {
-    console.log("plan downgrader");
+// cron.schedule(
+//   "51 13 * * *",
+//   async () => {
+//     const now = getTodayDate();
 
-    const now = getTodayDate();
+//     try {
+//       await User.updateMany(
+//         {
+//           "plan.trial.status": "active",
+//           "plan.trial.endsAt": { $lt: now },
+//         },
+//         {
+//           $set: { "plan.trial.status": "expired" },
+//         }
+//       );
+//     } catch (error) {
+//       console.log("error downgrade trail", error);
+//     }
 
-    await User.updateMany(
-      {
-        "plan.trial.status": "active",
-        "plan.trial.endsAt": { $lt: now },
-      },
-      {
-        $set: { "plan.trial.status": "expired" },
-      }
-    );
+//     const freePlan = await Plan.findOne({
+//       code: "free",
+//       isActive: true,
+//     }).select("_id");
 
-    const FREE_PLAN_ID = await Plan.findOne({ code: "free" });
-    await User.updateMany(
-      {
-        "plan.subscription.status": "ACTIVE",
-        "plan.subscription.endsAt": { $lt: new Date() },
-      },
-      {
-        $set: {
-          "plan.subscription.status": "EXPIRED",
-          "plan.currentPlanId": FREE_PLAN_ID,
-        },
-      }
-    );
+//     try {      
+//       await User.updateMany(
+//         {
+//           "plan.subscription.status": "ACTIVE",
+//           "plan.subscription.endsAt": { $lt: now },
+//         },
+//         {
+//           $set: {
+//             "plan.subscription.status": "EXPIRED",
+//             "plan.currentPlanId": freePlan,
+//           },
+//         }
+//       );
+//     } catch (error) {
+//       console.log("error downgrade subscription", error);
+//     }
 
-    //     await teacher.save();
-    //     // sendEmail(user.email, "Your Yadxy plan has expired...");
-    //   }
-  },{});
+//     console.log("[✅] Plan downgrade cron executed successfully");
+//     //     await teacher.save();
+//     //     // sendEmail(user.email, "Your Yadxy plan has expired...");
+//     //   }
+//   },
+//   {}
+// );

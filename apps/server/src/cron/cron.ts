@@ -1,5 +1,5 @@
 import { cronJobs } from "./AutomationService";
-import { Student, User } from "@repo/db";
+import { Plan, User } from "@repo/db";
 import { getTodayDate } from "../utils/dateUtils";
 
 export async function runGenerateMonthlyFees() {
@@ -15,39 +15,32 @@ export async function runPlanDowngrade() {
 
   const now = getTodayDate();
 
-  const teachers = await User.find({
-    $or: [
-      { "plan.trial.status": "active" },
-      { "plan.subscription.status": "ACTIVE" },
-    ],
-  });
-
-  for (const teacher of teachers) {
-    let hasChanged = false;
-
-    if (
-      teacher.plan.trial.status === "active" &&
-      teacher.plan.trial.endsAt &&
-      teacher.plan.trial.endsAt < now
-    ) {
-      teacher.plan.trial.status = "expired";
-      hasChanged = true;
+  await User.updateMany(
+    {
+      "plan.trial.status": "active",
+      "plan.trial.endsAt": { $lt: now },
+    },
+    {
+      $set: { "plan.trial.status": "expired" },
     }
+  );
 
-    if (
-      teacher.plan.subscription.status === "ACTIVE" &&
-      teacher.plan.subscription.endsAt &&
-      teacher.plan.subscription.endsAt < now
-    ) {
-      teacher.plan.subscription.status = "EXPIRED";
-      hasChanged = true;
+  const freePlan = await Plan.findOne({
+    code: "free",
+    isActive: true,
+  }).select("_id");
+
+  await User.updateMany(
+    {
+      "plan.subscription.status": "ACTIVE",
+      "plan.subscription.endsAt": { $lt: now },
+    },
+    {
+      $set: {
+        "plan.subscription.status": "EXPIRED",
+        "plan.currentPlanId": freePlan,
+      },
     }
-
-    if (hasChanged) {
-      await teacher.save();
-    }
-  }
-
-  console.log("[CRON] Plan downgrade completed");
+  );
+  console.log("[✅] Plan downgrade cron executed successfully");
 }
-
