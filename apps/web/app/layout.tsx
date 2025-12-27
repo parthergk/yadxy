@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
       { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
       { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
     ],
@@ -104,7 +105,8 @@ const organizationSchema = {
   "@type": "Organization",
   name: "Yadxy",
   url: "https://yadxy.com",
-  logo: "https://yadxy.com/yadxy-schema-16x9.jpg",
+  logo: "https://yadxy.com/logo-512x512.png",
+  image: "https://yadxy.com/yadxy-schema-16x9.jpg",
   description: siteDescription,
   sameAs: [
     "https://www.instagram.com/yadxyapp",
@@ -132,7 +134,7 @@ const softwareSchema = {
   url: "https://yadxy.com",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web",
-  logo: "https://yadxy.com/yadxy-schema-16x9.jpg",
+  logo: "https://yadxy.com/logo-512x512.png",
   image: "https://yadxy.com/yadxy-schema-16x9.jpg",
   author: {
     "@type": "Person",
