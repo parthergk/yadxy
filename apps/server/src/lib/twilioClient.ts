@@ -1,4 +1,3 @@
 export async function smsSender(contact:string) {
-    console.log("Sms sender");
-    
+    console.log("Sms sender");   
 }

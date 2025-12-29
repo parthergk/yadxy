@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { verifyJwt } from "../middleware/verifyJwt";
 import { FeePayment } from "@repo/db";
 import { IStudent } from "@repo/types";
-import { whatsappSender } from "../lib/whatsappClient";
+import { whatsappSender } from "../lib/whatsappClient1";
 import { getTodayDate } from "../utils/dateUtils";
 
 const sendOverduesRouter: Router = Router();

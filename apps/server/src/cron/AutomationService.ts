@@ -66,7 +66,9 @@ export class FeeAutomationService {
       Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
     );
 
-    return todayDate >= dueDate;
+    console.log("camp", todayDate, ">=", dueDate);
+
+    return todayDate <= dueDate;
   }
 
   private static async createFeeRecord(student: IStudent, today: Date) {

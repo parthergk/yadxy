@@ -75,7 +75,7 @@ const Students = () => {
       }
       const result = await response.json();
       setIsLoading(false);
-      setStudents(result.studentWithStatus);
+      setStudents(result.students);
     } catch (err) {
       setIsLoading(false);
       console.error("Error fetching students:", err);
@@ -127,7 +127,7 @@ const Students = () => {
               filteredStudents.map((student) => (
                 <li
                   key={student._id}
-                  className=" w-full grid grid-cols-8 gap-1 items-center border-b border-slate-100 pb-2 text-sm sm:text-base"
+                  className=" w-full grid grid-cols-7 gap-1 items-center border-b border-slate-100 pb-2 text-sm sm:text-base"
                 >
                   <span className="truncate">{student.name}</span>
                   <span>{student.contact}</span>
@@ -135,7 +135,7 @@ const Students = () => {
                   <span>₹{student.monthlyFee}</span>
                   <span>{new Date(student.joinDate).toLocaleDateString()}</span>
                   <span className=" text-center">{student.feeDay}</span>
-                  <div
+                  {/* <div
                     className={` w-full max-w-20 sm:max-w-24 px-2 py-0.5 rounded-2xl text-center border ${
                       student.status.toLowerCase() === "paid"
                         ? "border-green-500 text-green-600"
@@ -145,7 +145,7 @@ const Students = () => {
                     }`}
                   >
                     {student.status}
-                  </div>
+                  </div> */}
                   <div className="flex gap-5">
                     <button
                       onClick={() => {
@@ -178,7 +178,7 @@ const Students = () => {
                         Delete
                       </span>
                     </button>
-                    <button
+                    {/* <button
                       disabled={student.status.toLowerCase() === "paid"}
                       onClick={() => {
                         (setOpenMark(true), setFeeId(student.feeId));
@@ -189,7 +189,7 @@ const Students = () => {
                       <span className="px-2 bottom-3 left-1 absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                         Mark
                       </span>
-                    </button>
+                    </button> */}
                   </div>
                 </li>
               ))

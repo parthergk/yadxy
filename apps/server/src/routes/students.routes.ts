@@ -4,6 +4,7 @@ import { StudentSchema, StudentUpdateSchema } from "@repo/validation/types";
 import { Student, User, FeePayment } from "@repo/db";
 import { checkPlanLimit } from "../middleware/checkPlanLimit";
 import { getTodayDate } from "../utils/dateUtils";
+import { students } from "../utils/students";
 
 const studentRouter: Router = Router();
 
@@ -15,32 +16,32 @@ studentRouter.get("/", verifyJwt, async (req, res) => {
       teacherId: teacherId.id,
     }).sort({ name: 1 });
 
-    const now = new Date();
+    // const now = new Date();
 
-    const firstDayOfMonth = new Date(
-      Date.UTC(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0)
-    );
+    // const firstDayOfMonth = new Date(
+    //   Date.UTC(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0)
+    // );
 
-    const lastDayOfMonth = new Date(
-      Date.UTC(now.getFullYear(), now.getMonth() + 1, 0, 0, 0, 0)
-    );
+    // const lastDayOfMonth = new Date(
+    //   Date.UTC(now.getFullYear(), now.getMonth() + 1, 0, 0, 0, 0)
+    // );
 
-    const studentWithStatus = await Promise.all(
-      students.map(async (student) => {
-        const fee = await FeePayment.findOne({
-          studentId: student._id,
-          dueDate: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
-        });
+    // const studentWithStatus = await Promise.all(
+    //   students.map(async (student) => {
+    //     const fee = await FeePayment.findOne({
+    //       studentId: student._id,
+    //       dueDate: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
+    //     });
 
-        return {
-          ...student.toObject(),
-          status: fee?.status,
-          feeId: fee?._id
-        };
-      })
-    );
-    
-    res.status(200).json({ message: "All students", studentWithStatus });
+    //     return {
+    //       ...student.toObject(),
+    //       status: fee?.status,
+    //       feeId: fee?._id,
+    //     };
+    //   })
+    // );
+
+    res.status(200).json({ message: "All students", students });
     return;
   } catch (error) {
     console.error("Error fetching teacher students:", error);
@@ -91,7 +92,49 @@ studentRouter.post(
       }
 
       const joinDate = getTodayDate();
+      
       const feeDay = parsedBody.data.feeDay || joinDate.getDate();
+      
+      for (const student of students) {
+        const newstudent = new Student({
+          teacherId: student.teacherId,
+          name: student.name,
+          contact: student.contact,
+          class: student.class,
+          sub: student.sub,
+          monthlyFee: student.monthlyFee,
+          isActivate: student.isActivate,
+          joinDate: joinDate,
+          feeDay: student.feeDay,
+        });
+        
+        await newstudent.save();
+        
+        let dueDate = new Date(newstudent.joinDate);
+        
+        if (parsedBody.data.feeDay) {          
+          dueDate = new Date(Date.UTC(
+            joinDate.getFullYear(),
+            joinDate.getMonth(),
+            student.feeDay
+          ));
+        }
+        
+        const firstReminderDate = new Date(dueDate);
+        if (dueDate > new Date()) {
+          firstReminderDate.setDate(firstReminderDate.getDate() - 1);
+        }
+
+        await FeePayment.create({
+          studentId: newstudent._id,
+          teacherId: teacher._id,
+          amount: newstudent.monthlyFee,
+          dueDate: dueDate,
+          status: "pending",
+          reminderCount: 0,
+          nextReminderAt: firstReminderDate,
+        });
+      }
 
       const student = new Student({
         teacherId: userBody.id,
@@ -190,9 +233,9 @@ studentRouter.get("/:id", verifyJwt, async (req, res) => {
 
 studentRouter.put("/:id", verifyJwt, async (req: Request, res: Response) => {
   const { id } = req.params;
-  const  data  = req.body;
+  const data = req.body;
   const userBody = req.user;
-  
+
   try {
     const parsedBody = StudentUpdateSchema.safeParse(data);
     if (!parsedBody.success) {
@@ -207,7 +250,7 @@ studentRouter.put("/:id", verifyJwt, async (req: Request, res: Response) => {
     const student = await Student.findOne({ _id: id, teacherId: userBody.id });
 
     if (!student) {
-      res.status(404).json({success: false, message: "Student not found" });
+      res.status(404).json({ success: false, message: "Student not found" });
       return;
     }
 
@@ -218,13 +261,18 @@ studentRouter.put("/:id", verifyJwt, async (req: Request, res: Response) => {
     student.feeDay = parsedBody.data.dueDate;
     await student.save();
 
-    res.status(200).json({success: true, message: "Student updated successfully", student });
+    res.status(200).json({
+      success: true,
+      message: "Student updated successfully",
+      student,
+    });
     return;
   } catch (error) {
     console.error("Error updating student:", error);
-    res
-      .status(500)
-      .json({success: false, message: "Failed to update student. Please try again." });
+    res.status(500).json({
+      success: false,
+      message: "Failed to update student. Please try again.",
+    });
     return;
   }
 });
@@ -237,7 +285,7 @@ studentRouter.delete("/:id", verifyJwt, async (req: Request, res: Response) => {
     const student = await Student.findOne({ _id: id, teacherId: userBody.id });
 
     if (!student) {
-      res.status(404).json({success: false, error: "Student not found" });
+      res.status(404).json({ success: false, error: "Student not found" });
       return;
     }
 
@@ -253,9 +301,10 @@ studentRouter.delete("/:id", verifyJwt, async (req: Request, res: Response) => {
     return;
   } catch (error) {
     console.error("Error deleting student:", error);
-    res
-      .status(500)
-      .json({ success: false, error: "Failed to delete student. Please try again." });
+    res.status(500).json({
+      success: false,
+      error: "Failed to delete student. Please try again.",
+    });
     return;
   }
 });
