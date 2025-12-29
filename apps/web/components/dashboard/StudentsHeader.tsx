@@ -8,7 +8,6 @@ const StudentsHeader = () => {
     "Monthly Fee",
     "Join Date",
     "Due Date",
-    // "Status",
     "Actions",
   ];
   return (

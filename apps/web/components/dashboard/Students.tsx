@@ -135,17 +135,6 @@ const Students = () => {
                   <span>₹{student.monthlyFee}</span>
                   <span>{new Date(student.joinDate).toLocaleDateString()}</span>
                   <span className=" text-center">{student.feeDay}</span>
-                  {/* <div
-                    className={` w-full max-w-20 sm:max-w-24 px-2 py-0.5 rounded-2xl text-center border ${
-                      student.status.toLowerCase() === "paid"
-                        ? "border-green-500 text-green-600"
-                        : student.status.toLowerCase() === "pending"
-                          ? "border-yellow-500 text-yellow-600"
-                          : "border-red-500 text-red-600"
-                    }`}
-                  >
-                    {student.status}
-                  </div> */}
                   <div className="flex gap-5">
                     <button
                       onClick={() => {
@@ -178,18 +167,6 @@ const Students = () => {
                         Delete
                       </span>
                     </button>
-                    {/* <button
-                      disabled={student.status.toLowerCase() === "paid"}
-                      onClick={() => {
-                        (setOpenMark(true), setFeeId(student.feeId));
-                      }}
-                      className={`relative text-sub hover:underline text-sm group ${student.status.toLowerCase() === "paid" ? "cursor-not-allowed" : "cursor-pointer"}`}
-                    >
-                      <BadgeCheck className=" h-4 w-4" />
-                      <span className="px-2 bottom-3 left-1 absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        Mark
-                      </span>
-                    </button> */}
                   </div>
                 </li>
               ))

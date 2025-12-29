@@ -16,31 +16,6 @@ studentRouter.get("/", verifyJwt, async (req, res) => {
       teacherId: teacherId.id,
     }).sort({ name: 1 });
 
-    // const now = new Date();
-
-    // const firstDayOfMonth = new Date(
-    //   Date.UTC(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0)
-    // );
-
-    // const lastDayOfMonth = new Date(
-    //   Date.UTC(now.getFullYear(), now.getMonth() + 1, 0, 0, 0, 0)
-    // );
-
-    // const studentWithStatus = await Promise.all(
-    //   students.map(async (student) => {
-    //     const fee = await FeePayment.findOne({
-    //       studentId: student._id,
-    //       dueDate: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
-    //     });
-
-    //     return {
-    //       ...student.toObject(),
-    //       status: fee?.status,
-    //       feeId: fee?._id,
-    //     };
-    //   })
-    // );
-
     res.status(200).json({ message: "All students", students });
     return;
   } catch (error) {
