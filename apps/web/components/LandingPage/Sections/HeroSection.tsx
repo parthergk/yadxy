@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
@@ -49,9 +49,9 @@ const HeroSection = () => {
           backgroundRepeat: "repeat",
         }}
       ></div>
-      <div className=" min-h-screen flex flex-col justify-center items-center pt-28 sm:pt-36 md:pt-48 gap-20 ">
-        <div className="w-full max-w-4xl mx-auto text-center z-20 px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-forum text-heading leading-tight md:leading-none">
+      <div className=" min-h-screen flex flex-col justify-center items-center pt-20 sm:pt-36 md:pt-44 gap-20 ">
+        <div className="w-full max-w-5xl mx-auto text-center z-20 px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-forum text-heading leading-tight md:leading-none">
             <motion.span
               variants={slideLeftVariants}
               initial="hidden"
@@ -59,17 +59,18 @@ const HeroSection = () => {
               transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
               className=" inline-block"
             >
-              Track Tuition Fees Easily.
+              Track Tuition Fees Easily,
+              <span className=" hidden sm:inline">{" "}and</span>
             </motion.span>
-            <br />
             <motion.span
               variants={slideLeftVariants}
               initial="hidden"
               animate="visible"
               transition={{ delay: 2, duration: 0.8, ease: "easeOut" }}
-              className=" inline-block"
+              className="inline-block"
             >
-              Send Automated Fee Reminders.
+              <span className=" sm:hidden inline">and{" "}</span>
+              Automate Fee Reminders.
             </motion.span>
           </h1>
 
@@ -77,10 +78,9 @@ const HeroSection = () => {
             variants={fadeUpVariants}
             initial="hidden"
             animate="visible"
-            className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-sub max-w-2xl mx-auto"
+            className="mt-3 sm:mt-4 text-sm sm:text-lg md:text-xl text-sub max-w-2xl mx-auto"
           >
-            A smart fee tracker built for local tuition teachers & coaching
-            centers
+            A smart, fee tracking system designed to help tuition teachers and coaching centers manage payments and automat reminders.
           </motion.p>
 
           <motion.div
@@ -91,11 +91,11 @@ const HeroSection = () => {
           >
             <Link
               href="/register"
-              className="px-6 py-2 rounded-full bg-primary text-white font-medium shadow-lg hover:bg-[#ea580c] transition-colors duration-200"
+              className=" px-4 sm:px-6 py-1.5 sm:py-2 rounded-md bg-primary text-white font-medium shadow-lg hover:bg-[#ea580c] hover:scale-105 transition duration-200"
             >
               Get Started
             </Link>
-            <button className="px-6 py-2 rounded-full border border-[#6B7280] text-[#374151] hover:bg-[#f9fafb] transition-colors duration-200 hover:cursor-pointer">
+            <button className=" px-4 sm:px-6 py-1.5 sm:py-2 rounded-md bg-neutral-300/20 text-neutral-800 font-medium backdrop-blur-sm shadow-lg hover:scale-105 transition- duration-200 hover:cursor-pointer">
               How it Works
             </button>
           </motion.div>

@@ -62,7 +62,7 @@ const Header = () => {
             {navItem.map((item) => (
               <li
                 key={item.name}
-                className="hover:text-primary transition-colors duration-200"
+                className="px-2 hover:text-primary transition-colors duration-200"
               >
                 <Link href={item.path}>{item.name}</Link>
               </li>
