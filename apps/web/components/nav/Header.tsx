@@ -38,7 +38,7 @@ const Header = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         initial="hidden"
         animate="visible"
-        className="w-full py-2.5 md:py-3 my-5 mx-3 flex justify-between items-center rounded-xl px-5 bg-offwhite/50 backdrop-blur-sm text-body shadow-2xl"
+        className="w-full py-2.5 md:py-3.5 my-5 mx-3 flex justify-between items-center rounded-xl px-5 bg-neutral-300/20 backdrop-blur-sm shadow-2xl border border-neutral-100/50"
       >
         <motion.h1
           variants={scaleVariants}
@@ -57,7 +57,7 @@ const Header = () => {
             variants={fadeUpVariants}
             initial="hidden"
             animate="visible"
-            className="flex gap-10 lg:gap-12 text-lg justify-center items-center tracking-wider text-body"
+            className="flex gap-10 lg:gap-12 text-lg justify-center items-center tracking-wider text-neutral-900"
           >
             {navItem.map((item) => (
               <li
@@ -79,7 +79,7 @@ const Header = () => {
         >
           <Link
             href="/login"
-            className="px-5 py-1.5 sm:px-6 sm:py-2 rounded-full bg-primary text-white font-medium shadow-md hover:bg-[#ea580c] transition-colors duration-200"
+            className="px-5 py-1.5 sm:px-6 sm:py-2 rounded-md bg-primary text-white font-medium shadow-md hover:bg-[#ea580c] transition-colors duration-200"
           >
             Log In
           </Link>

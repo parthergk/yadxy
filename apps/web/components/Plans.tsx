@@ -94,7 +94,7 @@ const Plans = ({ planType }: { planType: string }) => {
   return (
     <>
       {message && (
-        <div className="mt-5 p-2 rounded-md text-sm font-medium bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-xl shadow-black/10 border border-white/50">
+        <div className="mt-5 p-2 rounded-md text-sm font-medium bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-xl shadow-black/10 border border-white/50 text-green-600">
           {message}
         </div>
       )}
