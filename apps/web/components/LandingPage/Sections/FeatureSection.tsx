@@ -1,41 +1,45 @@
-"use client"
+"use client";
 import React from "react";
 import FeatureCard from "../Cards/FeatureCard";
 import { motion } from "motion/react";
+import {
+  Users,
+  BellRing,
+  BarChart3,
+  Smartphone,
+  LucideIcon,
+} from "lucide-react";
+
+type Feature = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+};
 
 const FeatureSection = () => {
-  const features = [
+  const features: Feature[] = [
     {
-      url: "/image/features/student.png",
+      icon: Users,
       title: "Smart Student Management",
       desc: "Easily track every student in one place. Add new students, update details, and manage without any hassle. With our intuitive student database, teachers can save time and focus more on teaching.",
     },
     {
-      url: "/image/features/reminder.png",
+      icon: BellRing,
       title: "Automated Fee Reminders",
       desc: "The system sends smart WhatsApp and SMS reminders automatically before and after due dates. Teachers stay stress-free, while parents receive timely updates for hassle-free payments.",
     },
     {
-      url: "/image/features/upi.png",
-      title: "Instant UPI Payments",
-      desc: "Collect tuition fees instantly through secure UPI-based payments. Every payment is logged in real time, ensuring accurate records and smooth transactions.",
-    },
-    {
-      url: "/image/features/dashboard.png",
+      icon: BarChart3,
       title: "Fee Reports & Insights",
       desc: "Get a clear picture of your earnings with detailed fee reports and insights. Track pending, collected, and overdue payments, generate monthly reports.",
     },
     {
-      url: "/image/features/mobile.png",
+      icon: Smartphone,
       title: "Mobile-First Dashboard",
       desc: "Designed for teachers on the go. Our mobile-friendly dashboard works seamlessly on phones, tablets, and desktops, giving you the freedom to manage fees anytime, anywhere.",
     },
-    {
-      url: "/image/features/security.png",
-      title: "Secure & Private Data",
-      desc: "Your data is 100% safe. With enterprise-grade security, all student and fee records are encrypted and accessible only to you. No third parties, no leaks—just complete privacy.",
-    },
   ];
+
   return (
     <section className="mt-5 w-full py-14 md:py-28 px-5">
       <motion.div
@@ -45,20 +49,30 @@ const FeatureSection = () => {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h3 className="sm:text-lg md:text-xl text-primary">FEATURES</h3>
-        <h1 className="text-[28px] sm:text-4xl mt-5 ">
-          Why Choose our Platform?
+        <h3 className="sm:text-lg md:text-xl text-primary text-start">
+          FEATURES
+        </h3>
+        <h1 className="text-[28px] sm:text-5xl mt-5 max-w-lg text-start">
+          Transform your workflow with our SaaS tool
         </h1>
       </motion.div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 gap-y-5 md:gap-y-10 pt-16 lg:mt-[72px]">
-        {features.map((feature) => (
-          <FeatureCard
-            key={feature.title}
-            url={feature.url}
-            title={feature.title}
-            desc={feature.desc}
-          />
-        ))}
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0.5 pt-16">
+        <div className="md:col-span-2 border-b border-white/60">
+          { features[0] && <FeatureCard {...features[0]} />}
+        </div>
+
+        <div className="md:col-span-1 border-l border-white/60">
+          { features[1] && <FeatureCard {...features[1]} />}
+        </div>
+
+        <div className="md:col-span-1 border-r border-white/60">
+          { features[2] && <FeatureCard {...features[2]} />}
+        </div>
+
+        <div className="md:col-span-2 border-t border-white/60">
+          { features[3] && <FeatureCard {...features[3]} />}
+        </div>
       </div>
     </section>
   );
