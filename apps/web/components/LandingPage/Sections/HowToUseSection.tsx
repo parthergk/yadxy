@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import RegisterCard from "../Cards/Register";
+import AddStudent from "../Cards/AddStudent";
 
 const HowToUseSection = () => {
   return (
@@ -28,15 +29,17 @@ const HowToUseSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             viewport={{ once: true, amount: 0.2 }}
-            className=" flex flex-col justify-between relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full overflow-hidden"
+            className=" flex flex-col justify-between relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full"
           >
-            <div className="relative z-10 h-full w-full flex justify-center items-center perspective-distant group cursor-pointer">
-              <div className="mask-radial-from-50% mask-b-from-50% -rotate-[20deg] rotate-x-[35deg] rotate-y-[16deg] overflow-hidden">
+            <div className="relative z-10 h-full w-full flex justify-center items-center perspective-distant group cursor-pointer overflow-hidden" >
+              <div className="mask-radial-from-50% mask-b-from-50% -rotate-[20deg] rotate-x-[35deg] rotate-y-[16deg] ">
                 <RegisterCard />
               </div>
             </div>
 
             <div className="relative z-10 flex flex-col p-6">
+              <span className="sm:text-lg md:text-xl text-primary">STEP 1</span>
+
               <h1 className="text-lg sm:text-xl md:text-2xl font-medium truncate">
                 Sign up in Minutes
               </h1>
@@ -57,26 +60,23 @@ const HowToUseSection = () => {
             viewport={{ once: true, amount: 0.2 }}
             className="flex flex-col relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full"
           >
-            <div className="relative z-10 flex flex-col gap-2 sm:gap-3 p-6">
+            <div className="relative z-10 w-full flex justify-center items-center perspective-distant group cursor-pointer">
+              <div className=" h-full w-full rotate-1 rotate-x-[40deg] rotate-y-3 overflow-hidden">
+                <AddStudent />
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col p-6">
               <span className="sm:text-lg md:text-xl text-primary">STEP 2</span>
               <h1 className="text-lg sm:text-xl md:text-2xl font-medium truncate">
                 Add Students Easily
               </h1>
-              <p className="text-sm sm:text-base leading-snug text-sub line-clamp-3">
+              <p className="text-sm sm:text-base leading-snug text-sub line-clamp-3 mt-2">
                 Quickly add student details such as name, contact, and fee
                 schedule. Organize your batches and keep everything in one
                 place.
               </p>
             </div>
-            <div className="relative z-10 h-full w-full bg-amer-400 flex items-end justify-start group cursor-pointer">
-              <Image
-                src="/image/work/snd1.png"
-                alt="sign-in"
-                width={350}
-                height={350}
-                className=" w-56 sm:w-80 object-contain rounded-tr-lg transform origin-bottom-left transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
+
             <div className="h-full w-full absolute z-0 opacity-20 md:opacity-35 [background-image:radial-gradient(circle_at_top_right,_#FFFFFF_0%,_#E0ECFF_25%,_#EAE2FF_50%,_#F8E8DB_75%,_#FFFFFF_100%)] rounded-bl-full"></div>
           </motion.div>
         </div>
