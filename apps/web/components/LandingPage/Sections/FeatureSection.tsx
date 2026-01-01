@@ -19,14 +19,14 @@ type Feature = {
 const FeatureSection = () => {
   const features: Feature[] = [
     {
-      icon: Users,
-      title: "Smart Student Management",
-      desc: "Easily track every student in one place. Add new students, update details, and manage without any hassle. With our intuitive student database, teachers can save time and focus more on teaching.",
-    },
-    {
       icon: BellRing,
       title: "Automated Fee Reminders",
       desc: "The system sends smart WhatsApp and SMS reminders automatically before and after due dates. Teachers stay stress-free, while parents receive timely updates for hassle-free payments.",
+    },
+    {
+      icon: Users,
+      title: "Smart Student Management",
+      desc: "Easily track every student in one place. Add new students, update details, and manage. With student database, teachers can save time and focus more on teaching.",
     },
     {
       icon: BarChart3,
@@ -52,26 +52,26 @@ const FeatureSection = () => {
         <h3 className="sm:text-lg md:text-xl text-primary text-start">
           FEATURES
         </h3>
-        <h1 className="text-[28px] sm:text-5xl mt-5 max-w-lg text-start">
+        <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3 max-w-lg text-start">
           Transform your workflow with our SaaS tool
         </h1>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0.5 pt-16">
-        <div className="md:col-span-2 border-b border-white/60">
-          { features[0] && <FeatureCard {...features[0]} />}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-0.5 pt-6 sm:pt-8">
+        <div className="md:col-span-2 sm:border-b border-white/60">
+          {features[0] && <FeatureCard {...features[0]} />}
         </div>
 
-        <div className="md:col-span-1 border-l border-white/60">
-          { features[1] && <FeatureCard {...features[1]} />}
+        <div className="md:col-span-1 sm:border-l border-white/60">
+          {features[1] && <FeatureCard {...features[1]} />}
         </div>
 
-        <div className="md:col-span-1 border-r border-white/60">
-          { features[2] && <FeatureCard {...features[2]} />}
+        <div className="md:col-span-1 sm:border-r border-white/60">
+          {features[2] && <FeatureCard {...features[2]} />}
         </div>
 
-        <div className="md:col-span-2 border-t border-white/60">
-          { features[3] && <FeatureCard {...features[3]} />}
+        <div className="md:col-span-2 sm:border-t border-white/60">
+          {features[3] && <FeatureCard {...features[3]} />}
         </div>
       </div>
     </section>
