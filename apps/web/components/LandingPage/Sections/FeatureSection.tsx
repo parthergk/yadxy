@@ -57,20 +57,20 @@ const FeatureSection = () => {
         </h1>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-0.5 pt-6 sm:pt-8">
-        <div className="md:col-span-2 sm:border-b border-white/60">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5  pt-6 sm:pt-8">
+        <div className="md:col-span-2">
           {features[0] && <FeatureCard {...features[0]} />}
         </div>
 
-        <div className="md:col-span-1 sm:border-l border-white/60">
+        <div className="md:col-span-1">
           {features[1] && <FeatureCard {...features[1]} />}
         </div>
 
-        <div className="md:col-span-1 sm:border-r border-white/60">
+        <div className="md:col-span-1">
           {features[2] && <FeatureCard {...features[2]} />}
         </div>
 
-        <div className="md:col-span-2 sm:border-t border-white/60">
+        <div className="md:col-span-2">
           {features[3] && <FeatureCard {...features[3]} />}
         </div>
       </div>

@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import RegisterCard from "../Cards/Register";
 
 const HowToUseSection = () => {
   return (
@@ -11,39 +12,39 @@ const HowToUseSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: true }}
-        className=" text-center"
       >
-        <h3 className="sm:text-lg md:text-xl text-primary">HOW TO USE?</h3>
-        <h1 className="text-[28px] sm:text-4xl mt-5 ">How it works?</h1>
+        <h3 className="sm:text-lg md:text-xl text-primary text-start">
+          HOW TO USE?
+        </h3>
+        <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3 max-w-lg text-start">
+          Simple Steps to Started with{" "}
+          <span className=" text-primary">Yadxy</span>
+        </h1>
       </motion.div>
-      <div className=" grid md:grid-cols-2 gap-10 pt-16 lg:mt-[72px]">
-        <div className=" h-full flex flex-col gap-10">
+      <div className=" grid md:grid-cols-2 gap-5 pt-16 ">
+        <div className=" h-full flex flex-col gap-5">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             viewport={{ once: true, amount: 0.2 }}
-            className=" flex flex-col relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full"
+            className=" flex flex-col justify-between relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full overflow-hidden"
           >
-            <div className="relative z-10 flex flex-col gap-2 sm:gap-3 p-6">
-              <span className="sm:text-lg md:text-xl text-primary">STEP 1</span>
+            <div className="relative z-10 h-full w-full flex justify-center items-center perspective-distant group cursor-pointer">
+              <div className="mask-radial-from-50% mask-b-from-50% -rotate-[20deg] rotate-x-[35deg] rotate-y-[16deg] overflow-hidden">
+                <RegisterCard />
+              </div>
+            </div>
+
+            <div className="relative z-10 flex flex-col p-6">
               <h1 className="text-lg sm:text-xl md:text-2xl font-medium truncate">
                 Sign up in Minutes
               </h1>
-              <p className="text-sm sm:text-base leading-snug text-sub line-clamp-3">
+              <p className="text-sm sm:text-base leading-snug text-sub line-clamp-3 mt-2">
                 Create your free account and set up your profile instantly. Our
                 platform is designed for tuition teachers and coaching
                 centers—no technical knowledge required.
               </p>
-            </div>
-            <div className="relative z-10 h-full w-full bg-amer-400 flex items-end justify-end group cursor-pointer">
-              <Image
-                src="/image/work/fst1.png"
-                alt="sign-in"
-                width={350}
-                height={350}
-                className=" w-52 sm:w-80 object-contain rounded-tl-lg transform origin-bottom-right transition-transform duration-500 group-hover:scale-110"
-              />
             </div>
 
             <div className="h-full w-full absolute z-0 opacity-20 md:opacity-35 [background-image:radial-gradient(circle_at_bottom_right,_#FFFFFF_0%,_#E0ECFF_25%,_#EAE2FF_50%,_#F8E8DB_75%,_#FFFFFF_100%)] rounded-tl-full"></div>
@@ -99,14 +100,14 @@ const HowToUseSection = () => {
             </p>
           </div>
           <div className="relative z-10 h-full w-full bg-amer-400 flex items-center justify-start group cursor-pointer">
-              <Image
-                src="/image/work/trd1.png"
-                alt="sign-in"
-                width={350}
-                height={750}
-                className=" w-48 sm:w-72 object-contain rounded-tr-lg rounded-br-lg transform origin-left transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
+            <Image
+              src="/image/work/trd1.png"
+              alt="sign-in"
+              width={350}
+              height={750}
+              className=" w-48 sm:w-72 object-contain rounded-tr-lg rounded-br-lg transform origin-left transition-transform duration-500 group-hover:scale-110"
+            />
+          </div>
           <div className="h-full w-full absolute z-0 opacity-25 md:opacity-35 [background-image:linear-gradient(to_right_top,_#FFFFFF_0%,_#E0ECFF_25%,_#EAE2FF_50%,_#F8E8DB_75%,_#FFFFFF_100%)]"></div>
         </motion.div>
       </div>
