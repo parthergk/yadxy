@@ -22,8 +22,6 @@ const FeatureCard: React.FC<Props> = ({ icon: Icon, title, desc }) => {
       <div className="bg-primary h-7 w-7 sm:h-8 sm:w-8 rounded-md flex items-center justify-center text-white shadow-lg">
         <Icon className=" h-4 w-4 sm:h-5 sm:w-5" />
       </div>
-
-      {/* <div className="flex flex-col space-y-3 mt-4"> */}
         <h2 className="text-base md:text-lg lg:text-xl text-heading font-medium">
           {title}
         </h2>
@@ -32,7 +30,6 @@ const FeatureCard: React.FC<Props> = ({ icon: Icon, title, desc }) => {
         <p className="text-sm md:text-[15px] lg:text-base leading-snug text-sub max-w-xl">
           {desc}
         </p>
-      {/* </div> */}
     </motion.div>
   );
 };

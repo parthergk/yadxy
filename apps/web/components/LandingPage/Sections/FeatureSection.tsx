@@ -53,7 +53,7 @@ const FeatureSection = () => {
           FEATURES
         </h3>
         <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3 max-w-lg text-start">
-          Transform your workflow with our SaaS tool
+          Transform your workflow with our <span className="text-primary">SaaS</span> tool
         </h1>
       </motion.div>
 
