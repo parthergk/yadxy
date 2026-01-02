@@ -2,25 +2,9 @@
 import React, { useEffect, useState } from "react";
 import PriceCard from "../Cards/PriceCard";
 import { motion } from "motion/react";
-import { IPlan } from "@repo/types";
 import { plans } from "../../../helpers/Plans";
 
 const PriceSection = () => {
-  // const [plans, setPlans] = useState<IPlan[]>([]);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/plan`);
-  //       const {plans} = await res.json();
-  //       setPlans(plans);
-  //     } catch (error) {
-  //       console.log("Error during the fetching the plan", error);
-  //     }
-  //   };
-  //   fetchProducts();
-  // }, [plans]);
-
    return (
     <section className="mt-5 w-full py-14 md:py-28 px-5">
       <motion.div
@@ -30,14 +14,14 @@ const PriceSection = () => {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h3 className=" text-center sm:text-lg md:text-xl text-primary">
+        <h3 className="sm:text-lg md:text-xl text-primary text-start">
           PRICINGS
         </h3>
-        <h1 className=" text-center text-[28px] sm:text-4xl mt-5 ">
-          Choose a Plan That Suits You
+        <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3 max-w-md text-start">
+          Choose a <span className=" text-primary">Plan</span> That Suits You
         </h1>
       </motion.div>
-      <div className="w-full pt-16 lg:mt-[72px]">
+      <div className="w-full pt-16 ">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           {plans && plans.map((plan, index) => (
             <PriceCard key={index} {...plan} />

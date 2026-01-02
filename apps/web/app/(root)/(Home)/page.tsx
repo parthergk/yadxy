@@ -93,8 +93,8 @@ export default function Home() {
         <FeatureSection />
         <Automate/>
         <HowToUseSection />
-        <TestimonialSection />
         <PriceSection />
+        <TestimonialSection />
         <CTA />
       </div>
     </>

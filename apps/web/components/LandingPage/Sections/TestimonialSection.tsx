@@ -1,14 +1,48 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "motion/react";
-import InfiniteMovingCards from "../InfiniteMovingCards";
+import TestimonialsCard from "../Cards/TestimonialsCard";
+interface Review {
+  text: string;
+  name: string;
+  subject: string;
+  url: string;
+}
 
+const reviews: Review[] = [
+  {
+    text: "Easily track every student in one place. Add new students, update details, and manage without any hassle. With our intuitive student database, teachers can save time and focus more on teaching.",
+    name: "Jatin Sharma",
+    subject: "Math",
+    url:"/image/teacher/teacher1.png"
+  },
+  {
+    text: "The fee reminder feature is very helpful. It saves a lot of manual work.",
+    name: "Priya Desai",
+    subject: "Science",
+    url:"/image/teacher/teacher2.png"
+  },
+  {
+    text: "Tracking student performance has become very simple. I appreciate the detailed analytics provided. It could improve with more customization options for reports.",
+    name: "Sajal Arora",
+    subject: "Science",
+    url:"/image/teacher/teacher3.png"
+  },
+  {
+    text: "The platform is great for sending bulk updates to parents. It's easy to use, and the templates make communication smooth.",
+    name: "Anjali Kumari",
+    subject: "English",
+    url:"/image/teacher/teacher4.png"
+  },
+  {
+    text: "I like how we can keep all student records neatly organized. The interface is clean, but I wish there was a mobile app version for quick access on the go.",
+    name: "Sandeep Singh",
+    subject: "Computer Science",
+    url:"/image/teacher/teacher5.png"
+  },
+];
 const TestimonialSection = () => {
-  const infiniteScrollCard = [
-    { direction: "up", speed: "normal" },
-    { direction: "down", speed: "normal" },
-    { direction: "up", speed: "normal" },
-  ];
+
   return (
     <section className="mt-5 w-full py-14 md:py-28 px-5">
       <motion.div
@@ -18,22 +52,20 @@ const TestimonialSection = () => {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h3 className="sm:text-lg md:text-xl text-primary">TESTIMONIALS</h3>
-        <h1 className="text-[28px] sm:text-4xl mt-5 ">What Our Users Say</h1>
+        <h3 className="sm:text-lg md:text-xl text-primary text-start">
+          TESTIMONIALS
+        </h3>
+        <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3 max-w-md text-start">
+          What Our Users Say
+        </h1>
       </motion.div>
 
-      <div className="w-full max-h-[600px] h-full relative overflow-hidden lg:mt-[72px]">
-        {/* Top gradient fade */}
-        <div className="absolute z-10 w-full h-48 bg-gradient-to-b from-[#EAE2FF] to-transparent"></div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-          {infiniteScrollCard.map((item, index) => (
-            <InfiniteMovingCards key={index} direction={item.direction as "up" | "down"} speed={item.speed as "fast" | "normal" | "slow"} />
-          ))}
+      <div className="w-full h-full relative overflow-hidden mt-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-4">
+         {reviews.map((review, idx) => (
+          <TestimonialsCard key={idx} review={review} />
+        ))}
         </div>
-
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 w-full h-36 bg-gradient-to-t from-[#EAE2FF] to-transparent"></div>
       </div>
     </section>
   );
