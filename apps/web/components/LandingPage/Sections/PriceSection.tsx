@@ -21,7 +21,7 @@ const PriceSection = () => {
           Choose a <span className=" text-primary">Plan</span> That Suits You
         </h1>
       </motion.div>
-      <div className="w-full pt-16 ">
+      <div className="w-full pt-8 sm:pt-16 ">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           {plans && plans.map((plan, index) => (
             <PriceCard key={index} {...plan} />

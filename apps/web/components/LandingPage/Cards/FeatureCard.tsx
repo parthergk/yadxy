@@ -19,8 +19,8 @@ const FeatureCard: React.FC<Props> = ({ icon: Icon, title, desc }) => {
       shadow-2xl shadow-black/10 rounded-xl flex flex-col gap-3"
     >
       <div className=" flex gap-2 flex-row items-end sm:items-start sm:flex-col">
-      <div className="bg-primary h-7 w-7 sm:h-8 sm:w-8 rounded-md flex items-center justify-center text-white shadow-lg">
-        <Icon className=" h-4 w-4 sm:h-5 sm:w-5" />
+      <div className="bg-primary h-8 w-8 sm:h-10 sm:w-10 rounded-md flex items-center justify-center text-white shadow-lg">
+        <Icon className=" h-6 w-6 sm:h-8 sm:w-8" />
       </div>
         <h2 className="text-base md:text-lg lg:text-xl text-heading font-medium">
           {title}

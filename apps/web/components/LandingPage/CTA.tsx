@@ -21,7 +21,7 @@ const item = {
 
 const CTA = () => {
   return (
-    <section className="mt-5 w-full py-14 md:py-28 px-5">
+    <section className="mt-5 w-full py-14  px-5">
       <motion.div
         variants={container}
         initial="hidden"

@@ -60,8 +60,8 @@ const TestimonialSection = () => {
         </h1>
       </motion.div>
 
-      <div className="w-full h-full relative overflow-hidden mt-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-4">
+      <div className="w-full h-full relative overflow-hidden pt-8 sm:pt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
          {reviews.map((review, idx) => (
           <TestimonialsCard key={idx} review={review} />
         ))}

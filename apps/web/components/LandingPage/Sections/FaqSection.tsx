@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 
 type FaqItem = {
@@ -48,11 +48,9 @@ export default function FaqSection() {
   };
 
   return (
-    <section className=" px-4 py-16">
+    <section className=" px-4 pt-16">
       <div className="text-center mb-12">
-                <h3 className="sm:text-lg md:text-xl text-primary">
-          Q & A
-        </h3>
+        <h3 className="sm:text-lg md:text-xl text-primary">Q & A</h3>
 
         <h1 className="text-[28px] sm:text-5xl mt-1 sm:mt-3">
           Frequently Asked Questions
@@ -67,7 +65,9 @@ export default function FaqSection() {
             <div
               key={faq.id}
               className={`border border-white/50 rounded-xl p-5 transition-all ${
-                isOpen ? "bg-gray-50" : "bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-2xl shadow-black/10 rounded-xl"
+                isOpen
+                  ? "bg-gray-50"
+                  : "bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-2xl shadow-black/10 rounded-xl"
               }`}
             >
               <button

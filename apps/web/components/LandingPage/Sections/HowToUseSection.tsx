@@ -24,7 +24,7 @@ const HowToUseSection = () => {
           <span className=" text-primary">Yadxy</span>
         </h1>
       </motion.div>
-      <div className=" grid md:grid-cols-2 gap-5 pt-16 ">
+      <div className=" grid md:grid-cols-2 gap-5 pt-8 sm:pt-16 ">
         <div className=" h-full flex flex-col gap-5">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
