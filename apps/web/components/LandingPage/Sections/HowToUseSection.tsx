@@ -63,7 +63,7 @@ const HowToUseSection = () => {
             className="flex flex-col relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full"
           >
             <div className="relative z-10 w-full flex justify-center items-center perspective-distant group cursor-pointer">
-              <div className=" h-full w-full rotate-1 rotate-x-[40deg] rotate-y-3 overflow-hidden">
+              <div className=" h-full w-full sm:rotate-2 rotate-x-45 sm:rotate-x-[40deg] rotate-y-3 overflow-hidden">
                 <AddStudent />
               </div>
             </div>
@@ -102,7 +102,7 @@ const HowToUseSection = () => {
             </p>
           </div>
           <div className="relative z-10 w-full h-full flex justify-center items-center perspective-distant group cursor-pointer overflow-hidden">
-            <div className=" flex m-auto relative w-full max-w-lg -rotate-12 rotate-x-[40deg] rotate-y-12">
+            <div className=" flex m-auto relative w-full max-w-lg -rotate-12 rotate-x-45 sm:rotate-x-[40deg] rotate-y-12">
             <ActivityCard />
             <OverDue />
             </div>
