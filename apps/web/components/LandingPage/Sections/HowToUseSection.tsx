@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import RegisterCard from "../Cards/Register";
 import AddStudent from "../Cards/AddStudent";
+import ActivityCard from "../Cards/ActivityCards";
+import OverDue from "../Cards/OverDue";
 
 const HowToUseSection = () => {
   return (
@@ -31,7 +33,7 @@ const HowToUseSection = () => {
             viewport={{ once: true, amount: 0.2 }}
             className=" flex flex-col justify-between relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl h-full"
           >
-            <div className="relative z-10 h-full w-full flex justify-center items-center perspective-distant group cursor-pointer overflow-hidden" >
+            <div className="relative z-10 h-full w-full flex justify-center items-center perspective-distant group cursor-pointer overflow-hidden">
               <div className="mask-radial-from-50% mask-b-from-50% -rotate-[20deg] rotate-x-[35deg] rotate-y-[16deg] ">
                 <RegisterCard />
               </div>
@@ -86,7 +88,7 @@ const HowToUseSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
           viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-col relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl"
+          className=" h-full flex flex-col relative shadow-2xl shadow-black/10 border border-white/50 rounded-xl"
         >
           <div className="relative z-10 flex flex-col gap-2 sm:gap-3 p-6">
             <span className="sm:text-lg md:text-xl text-primary">STEP 3</span>
@@ -99,14 +101,11 @@ const HowToUseSection = () => {
               real-time.
             </p>
           </div>
-          <div className="relative z-10 h-full w-full bg-amer-400 flex items-center justify-start group cursor-pointer">
-            <Image
-              src="/image/work/trd1.png"
-              alt="sign-in"
-              width={350}
-              height={750}
-              className=" w-48 sm:w-72 object-contain rounded-tr-lg rounded-br-lg transform origin-left transition-transform duration-500 group-hover:scale-110"
-            />
+          <div className="relative z-10 w-full h-full flex justify-center items-center perspective-distant group cursor-pointer overflow-hidden">
+            <div className=" flex m-auto relative w-full max-w-lg -rotate-12 rotate-x-[40deg] rotate-y-12">
+            <ActivityCard />
+            <OverDue />
+            </div>
           </div>
           <div className="h-full w-full absolute z-0 opacity-25 md:opacity-35 [background-image:linear-gradient(to_right_top,_#FFFFFF_0%,_#E0ECFF_25%,_#EAE2FF_50%,_#F8E8DB_75%,_#FFFFFF_100%)]"></div>
         </motion.div>

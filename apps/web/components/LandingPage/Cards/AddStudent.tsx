@@ -28,7 +28,7 @@ const AddStudent = () => {
         <div
           className="absolute top-24 left-7 sm:left-12 w-[85%]
           rounded-lg bg-gradient-to-bl from-[#E8DFFF] to-[#DDEBFF]
-          border border-white/60 shadow-xl p-4 space-y-3"
+          border border-white/60 shadow-xl p-4 space-y-3 group-hover:top-16 group-hover:scale-105 transition-all"
         >
           <div className="flex items-center gap-3">
             <Bell className="w-5 h-5 text-primary" />
