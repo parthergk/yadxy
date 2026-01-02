@@ -7,6 +7,7 @@ import TestimonialSection from "../../../components/LandingPage/Sections/Testimo
 import PriceSection from "../../../components/LandingPage/Sections/PriceSection";
 import { Metadata } from "next";
 import Automate from "../../../components/LandingPage/Sections/Automate";
+import FaqSection from "../../../components/LandingPage/Sections/FaqSection";
 
 export const metadata: Metadata = {
   title: "Yadxy – Smart Fee Tracker for Tutors & Coaching Centers",
@@ -95,6 +96,7 @@ export default function Home() {
         <HowToUseSection />
         <PriceSection />
         <TestimonialSection />
+        <FaqSection/>
         <CTA />
       </div>
     </>
