@@ -10,36 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
+      # Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup pnpm FIRST
+      # Setup pnpm FIRST
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      # 3️⃣ Setup Node with pnpm cache
+      # Setup Node with pnpm cache
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      # 4️⃣ Install dependencies
+      # Install dependencies
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      # 5️⃣ Build using turbo
+      # Build using turbo
       - name: Turbo build
         run: |
           pnpm turbo run build \
-            --filter=@yadxy/server \
-            --filter=@yadxy/web \
-            --filter=@yadxy/db
+          --filter=server \
+          --filter=web
 
-      # 6️⃣ Prepare deploy artifacts
+
+      # Prepare deploy artifacts
       - name: Prepare deploy artifacts
         run: |
           mkdir -p deploy/api deploy/web deploy/shared/db
@@ -57,7 +57,7 @@ jobs:
           cp packages/db/package.json deploy/shared/db/
           cp -r packages/db/dist deploy/shared/db/dist
 
-      # 7️⃣ Copy to EC2
+      # Copy to EC2
       - name: Deploy to EC2
         uses: appleboy/scp-action@v1
         with:
@@ -67,7 +67,7 @@ jobs:
           source: "deploy/*"
           target: "/srv/yadxy"
 
-      # 8️⃣ Restart PM2
+      # Restart PM2
      # - name: Restart PM2
       #  uses: appleboy/ssh-action@v1.0.3
        # with:
