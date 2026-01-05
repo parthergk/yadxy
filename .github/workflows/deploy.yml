@@ -35,7 +35,7 @@ jobs:
       - name: Turbo build
         run: |
           pnpm turbo run build \
-            --filter=apps/api \
+            --filter=apps/server \
             --filter=apps/web \
             --filter=packages/db
 
@@ -45,8 +45,8 @@ jobs:
           mkdir -p deploy/api deploy/web deploy/shared/db
 
           # API
-          cp apps/api/package.json deploy/api/
-          cp -r apps/api/dist deploy/api/
+          cp apps/server/package.json deploy/api/
+          cp -r apps/server/dist deploy/api/
 
           # WEB
           cp apps/web/package.json deploy/web/
