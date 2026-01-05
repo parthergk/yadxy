@@ -35,9 +35,9 @@ jobs:
       - name: Turbo build
         run: |
           pnpm turbo run build \
-            --filter=apps/server \
-            --filter=apps/web \
-            --filter=packages/db
+            --filter=@yadxy/server \
+            --filter=@yadxy/web \
+            --filter=@yadxy/db
 
       # 6️⃣ Prepare deploy artifacts
       - name: Prepare deploy artifacts
