@@ -14,7 +14,6 @@ const ForgotPassword = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<Inputs>();
-  const router = useRouter();
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;

@@ -1,33 +1,33 @@
 import mongoose, { Connection } from "mongoose";
 
-const DB_URI = process.env.MONGODB_URI;
-
-if (!DB_URI) {
-  throw new Error("please check the db uri string");
-}
-
 let cached: {
   conn: Connection | null;
-  promis: Promise<Connection> | null;
+  promise: Promise<Connection> | null;
 } = {
   conn: null,
-  promis: null,
+  promise: null,
 };
 
 async function connectTodb() {
-  if (cached.conn) {
-    return cached.conn;
+  const DB_URI = process.env.MONGODB_URI;
+
+  if (!DB_URI) {
+    throw new Error("please check the db uri string");
   }
 
-  if (!cached.promis) {
-    cached.promis = mongoose.connect(DB_URI!).then(() => mongoose.connection);
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(DB_URI)
+      .then(() => mongoose.connection);
   }
 
   try {
-    cached.conn = await cached.promis;
-  } catch (error) {
-    cached.promis = null;
-    throw error;
+    cached.conn = await cached.promise;
+  } catch (err) {
+    cached.promise = null;
+    throw err;
   }
 
   return cached.conn;
