@@ -12,7 +12,7 @@ cron.schedule("08 13 * * *", cronJobs.sendsendFeeReminders, {
 });
 
 cron.schedule(
-  "32 21 * * *",
+  "32 08 * * *",
   async () => {
     const now = getTodayDate();
 

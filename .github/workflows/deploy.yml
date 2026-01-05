@@ -6,40 +6,74 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1️⃣ Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@v1.0.0
+      # 2️⃣ Setup pnpm FIRST
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          host: ${{ secrets.MACHINE_IP }}
-          username: ubuntu
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
-          port: 22
-          script: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm use 22
+          version: 10
 
-            cd yadxy
+      # 3️⃣ Setup Node with pnpm cache
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
 
-            git pull origin main
+      # 4️⃣ Install dependencies
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
 
-            corepack enable
-            corepack prepare pnpm@latest --activate
-            
-            pnpm install --frozen-lockfile
+      # 5️⃣ Build using turbo
+      - name: Turbo build
+        run: |
+          pnpm turbo run build \
+            --filter=apps/api \
+            --filter=apps/web \
+            --filter=packages/db
 
-            cd apps/web
-            pnpm run build
+      # 6️⃣ Prepare deploy artifacts
+      - name: Prepare deploy artifacts
+        run: |
+          mkdir -p deploy/api deploy/web deploy/shared/db
 
-            cd ../server
-            pnpm run build
+          # API
+          cp apps/api/package.json deploy/api/
+          cp -r apps/api/dist deploy/api/
 
-            cd ../../
+          # WEB
+          cp apps/web/package.json deploy/web/
+          cp -r apps/web/.next deploy/web/
+          cp -r apps/web/public deploy/web/public
 
-            pm2 restart ecosystem.config.js
+          # DB
+          cp packages/db/package.json deploy/shared/db/
+          cp -r packages/db/dist deploy/shared/db/dist
+
+      # 7️⃣ Copy to EC2
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "deploy/*"
+          target: "/srv/yadxy"
+
+      # 8️⃣ Restart PM2
+     # - name: Restart PM2
+      #  uses: appleboy/ssh-action@v1.0.3
+       # with:
+        #  host: ${{ secrets.EC2_HOST }}
+         # username: ${{ secrets.EC2_USER }}
+          #key: ${{ secrets.EC2_SSH_KEY }}
+         # script: |
+          #  cd /srv/yadxy
+           # pm2 reload all
