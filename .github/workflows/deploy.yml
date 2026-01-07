@@ -52,6 +52,7 @@ jobs:
           cp -r packages/auth yadxy/packages/
           cp -r packages/types yadxy/packages/
           cp -r packages/validation yadxy/packages/
+          cp -r packages/typescript-config yadxy/packages/
 
       - name: Deploy to EC2
         uses: appleboy/scp-action@v1
