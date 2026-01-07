@@ -1,13 +1,31 @@
+# dependencies
 node_modules
+.pnpm-store
+.pnpm
+node_modules/.pnpm
+
+# build output
 .next
 dist
+build
+coverage
+.turbo
+
+# git
 .git
 .github
 .gitignore
-README.md
+
+# env & logs
 .env
-.env.local
+.env.*
 *.log
-.turbo
-coverage
+
+# system / editor
 .DS_Store
+.vscode
+
+# docker itself
+Dockerfile
+dockerfile
+docker-compose.yml
