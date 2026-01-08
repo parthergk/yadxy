@@ -12,7 +12,7 @@ interface DashboardData {
     paidDate: string;
   }[];
   upcomingDues: {
-    id:string;
+    id: string;
     name: string;
     amount: number;
     daysOverdue: number;
@@ -29,7 +29,7 @@ const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(
     null
   );
-  const {setOverDues} = useOverDue();
+  const { setOverDues } = useOverDue();
   const [errorMsg, setErrorMsg] = useState("");
 
   const statCards = [
@@ -53,11 +53,12 @@ const Dashboard = () => {
     },
   ];
 
-  
   const fetchDashboardData = async () => {
     console.log("WEB SECRET LEN", process.env.NEXTAUTH_SECRET?.length);
     console.log("JWT SECRET", process.env.JWT_SECRET);
     console.log("url ", process.env.NEXTAUTH_URL);
+    console.log("db uri", process.env.MONGODB_URI);
+    console.log("bravo", process.env.BREVO_FROM);
 
     try {
       const response = await fetch(
@@ -75,9 +76,9 @@ const Dashboard = () => {
         throw new Error("Failed to fetch dashboard data");
       }
 
-      const result = await response.json();  
+      const result = await response.json();
       console.log("result", result);
-          
+
       if (result.success === false) {
         throw new Error(result.message || "Please try again later.");
       }
@@ -97,10 +98,8 @@ const Dashboard = () => {
     fetchDashboardData();
   }, []);
 
-
   return (
     <>
-      
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 ">
         <StatCard
           title="Total Students"
@@ -118,13 +117,21 @@ const Dashboard = () => {
         ))}
       </div>
       {errorMsg && (
-      <div className="mt-2 p-2 rounded-md text-sm font-medium bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-xl shadow-black/10 border border-white/50 text-[#E53935]">
+        <div className="mt-2 p-2 rounded-md text-sm font-medium bg-gradient-to-bl from-[#E8DFFF]/30 to-[#DDEBFF]/30 shadow-xl shadow-black/10 border border-white/50 text-[#E53935]">
           {errorMsg}
         </div>
       )}
       <div className=" grid grid-cols-1 sm:grid-cols-2  gap-5">
-       { dashboardData?.recentActivity ? <ActivityCard activity={dashboardData?.recentActivity} /> : <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>}
-        { dashboardData?.upcomingDues ? <Upcoming upcomingDues={dashboardData?.upcomingDues} /> : <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>}
+        {dashboardData?.recentActivity ? (
+          <ActivityCard activity={dashboardData?.recentActivity} />
+        ) : (
+          <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>
+        )}
+        {dashboardData?.upcomingDues ? (
+          <Upcoming upcomingDues={dashboardData?.upcomingDues} />
+        ) : (
+          <div className="flex flex-col px-4 py-2 shadow-lg shadow-black/10 border border-white/50 rounded-xl min-h-[287px] animate-pulse"></div>
+        )}
       </div>
     </>
   );
