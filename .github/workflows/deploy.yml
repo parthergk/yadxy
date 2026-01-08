@@ -1,4 +1,4 @@
-name: Deploying yadxy on ec2
+name: Deploying yadxy on EC2
 
 on:
   push:
@@ -29,6 +29,8 @@ jobs:
 
       - name: Turbo build
         run: pnpm turbo run build
+        env: 
+          NEXT_PUBLIC_SERVER_URL: ${{secrets.NEXT_PUBLIC_SERVER_URL}}
 
       - name: Prepare deploy artifacts
         run: |
@@ -66,13 +68,13 @@ jobs:
           source: "yadxy/*"
           target: "/srv"
       
-      # - name: Install deps and Restart PM2
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{secrets.EC2_HOST}}
-      #     username: ${{secrets.EC2_USER}}
-      #     key: ${{secrets.EC2_SSH_KEY}}
-      #     script: |
-      #       cd /srv/yadxy
-      #       pnpm install --frozen-lockfile
-      #       pm2 reload all
+      - name: Install deps and Restart PM2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username: ${{secrets.EC2_USER}}
+          key: ${{secrets.EC2_SSH_KEY}}
+          script: |
+            cd /srv/yadxy
+            pnpm install --frozen-lockfile
+            pm2 reload all
