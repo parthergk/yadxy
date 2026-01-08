@@ -56,8 +56,8 @@ const Dashboard = () => {
   
   const fetchDashboardData = async () => {
     console.log("WEB SECRET LEN", process.env.NEXTAUTH_SECRET?.length);
-    console.log("WEB SECRET", process.env.NEXTAUTH_SECRET);
-    console.log("backend url", process.env.NEXT_PUBLIC_SERVER_URL);
+    console.log("JWT SECRET", process.env.JWT_SECRET);
+    console.log("url ", process.env.NEXTAUTH_URL);
 
     try {
       const response = await fetch(
