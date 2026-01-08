@@ -47,6 +47,7 @@ jobs:
           cp -r apps/server/dist yadxy/apps/server/
 
           cp apps/web/package.json yadxy/apps/web/
+          cp apps/web/next.config.js yadxy/apps/web/
           cp -r apps/web/.next yadxy/apps/web/
           cp -r apps/web/public yadxy/apps/web/
 
