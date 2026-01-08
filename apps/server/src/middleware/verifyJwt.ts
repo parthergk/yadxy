@@ -10,6 +10,7 @@ export async function verifyJwt(req: Request, res: Response, next: NextFunction)
       req: { cookies: req.cookies, headers: req.headers } as any,
       secret: process.env.NEXTAUTH_SECRET,
     });
+    console.log("token",token);
     
     if (!token) {
        res.status(401).json({success: false, error: "Not authenticated" });
