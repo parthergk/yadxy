@@ -31,7 +31,7 @@ jobs:
         run: pnpm turbo run build
         env: 
           NEXT_PUBLIC_SERVER_URL: ${{secrets.NEXT_PUBLIC_SERVER_URL}}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           CLIENT_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
 
       - name: Prepare deploy artifacts
