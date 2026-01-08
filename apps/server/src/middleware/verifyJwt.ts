@@ -4,6 +4,8 @@ import { getToken } from "next-auth/jwt";
 export async function verifyJwt(req: Request, res: Response, next: NextFunction):Promise<void> {
   try {
     console.log("API SECRET LEN", process.env.NEXTAUTH_SECRET?.length);
+    console.log("API SECRET", process.env.NEXTAUTH_SECRET);
+
     const token = await getToken({
       req: { cookies: req.cookies, headers: req.headers } as any,
       secret: process.env.NEXTAUTH_SECRET,
