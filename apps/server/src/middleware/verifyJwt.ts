@@ -3,8 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function verifyJwt(req: Request, res: Response, next: NextFunction):Promise<void> {
   try {
-    console.log("cookies", req.cookies, );
-    console.log("header", req.cookies, );
+    console.log("secret", process.env.NEXTAUTH_SECRET );
     
     const token = await getToken({
       req: { cookies: req.cookies, headers: req.headers } as any,
