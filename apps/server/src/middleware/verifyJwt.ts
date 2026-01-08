@@ -1,22 +1,23 @@
 import { NextFunction, Request, Response } from "express";
 import { getToken } from "next-auth/jwt";
 
-export async function verifyJwt(req: Request, res: Response, next: NextFunction):Promise<void> {
+export async function verifyJwt(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
-    console.log("cookies", req.cookies);
-    console.log("headers", req.headers);
-    console.log("NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET);
     
-
     const token = await getToken({
-      req: { cookies: req.cookies, headers: req.headers } as any,
+      req: { headers: { cookie: req.headers.cookie } } as any,
       secret: process.env.NEXTAUTH_SECRET,
+      secureCookie: true
     });
-    console.log("token",token);
-    
+    console.log("token", token);
+
     if (!token) {
-       res.status(401).json({success: false, error: "Not authenticated" });
-       return;
+      res.status(401).json({ success: false, error: "Not authenticated" });
+      return;
     }
 
     req.user = {
@@ -28,6 +29,6 @@ export async function verifyJwt(req: Request, res: Response, next: NextFunction)
     next();
   } catch (err) {
     console.error("ERROR: ", err);
-    res.status(401).json({success: false, error: "Invalid token" });
+    res.status(401).json({ success: false, error: "Invalid token" });
   }
 }
