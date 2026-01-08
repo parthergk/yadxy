@@ -34,7 +34,6 @@ export const authOptions: NextAuthOptions = {
             if (user.verificationToken !== credentials.token) {
               throw new Error("Invalid or expired token");
             }
-            console.log("NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET);
             
             user.verificationToken = null;
             await user.save();
