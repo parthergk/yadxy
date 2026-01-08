@@ -54,15 +54,10 @@ const Dashboard = () => {
   ];
 
   const fetchDashboardData = async () => {
-    console.log("WEB SECRET LEN", process.env.NEXTAUTH_SECRET?.length);
-    console.log("JWT SECRET", process.env.JWT_SECRET);
-    console.log("url ", process.env.NEXTAUTH_URL);
-    console.log("db uri", process.env.MONGODB_URI);
-    console.log("bravo", process.env.BREVO_FROM);
-
+    
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/dashboard/summary`,
+        `${process.env.NEXTAUTH_SECRET?.length}/api/v1/dashboard/summary`,
         {
           method: "GET",
           headers: {
