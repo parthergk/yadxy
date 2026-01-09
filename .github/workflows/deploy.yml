@@ -85,4 +85,4 @@ jobs:
 
             cd /srv/yadxy
             pnpm install --frozen-lockfile
-            pm2 restart all
+            pm2 reload all
