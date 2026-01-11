@@ -2,6 +2,7 @@ import { connectTodb, User } from "@repo/db";
 import { NextRequest, NextResponse } from "next/server";
 import { sendVerificationEmail } from "../../../../helpers/sendOTP";
 import jwt from "jsonwebtoken";
+import { sendEmail } from "../../../../helpers/mail/sendEmail";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -42,10 +43,11 @@ export async function POST(req: NextRequest) {
 
     const verificationUrl = `${process.env.CLIENT_URL}/verify?token=${token}`;
 
-    const emailResponse = await sendVerificationEmail(
-      user.email,
-      verificationUrl
-    );
+    const emailResponse = await sendEmail({
+      type: "register",
+      email: user.email,
+      url: verificationUrl,
+    });
 
     if (!emailResponse.success) {
       return NextResponse.json({

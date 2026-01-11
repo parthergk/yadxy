@@ -3,6 +3,7 @@ import { UserSchema } from "@repo/validation/types";
 import { connectTodb, Plan, User } from "@repo/db";
 import { sendVerificationEmail } from "../../../../helpers/sendOTP";
 import jwt from "jsonwebtoken";
+import { sendEmail } from "../../../../helpers/mail/sendEmail";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-    const freePlan = await Plan.findOne({code:"free", isActive: true})
+    const freePlan = await Plan.findOne({ code: "free", isActive: true });
 
     const now = new Date();
 
@@ -41,13 +42,13 @@ export async function POST(req: NextRequest) {
       password: parsedBody.data.password,
       isVerified: false,
       verifyCodePurpose: "register",
-      plan:{
+      plan: {
         currentPlanId: freePlan?.id,
         trial: {
           startedAt: now,
-          endsAt: new Date().setDate(now.getDate()+45)
-        }
-      }
+          endsAt: new Date().setDate(now.getDate() + 45),
+        },
+      },
     });
 
     const token = jwt.sign(
@@ -58,10 +59,11 @@ export async function POST(req: NextRequest) {
 
     const verificationUrl = `${process.env.CLIENT_URL}/verify?token=${token}`;
 
-    const emailResponse = await sendVerificationEmail(
-      parsedBody.data.email,
-      verificationUrl
-    );
+    const emailResponse = await sendEmail({
+      type: "register",
+      email: parsedBody.data.email,
+      url: verificationUrl,
+    });
 
     if (!emailResponse.success) {
       return NextResponse.json(
