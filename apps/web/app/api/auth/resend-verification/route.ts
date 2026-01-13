@@ -1,6 +1,5 @@
 import { connectTodb, User } from "@repo/db";
 import { NextRequest, NextResponse } from "next/server";
-import { sendVerificationEmail } from "../../../../helpers/sendOTP";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../../../../helpers/mail/sendEmail";
 

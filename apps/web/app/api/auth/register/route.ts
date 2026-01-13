@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserSchema } from "@repo/validation/types";
 import { connectTodb, Plan, User } from "@repo/db";
-import { sendVerificationEmail } from "../../../../helpers/sendOTP";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../../../../helpers/mail/sendEmail";
 
