@@ -170,13 +170,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/site.webmanifest" />
-        <link
-          rel="preload"
-          href="/fonts/Forum-Regular.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
