@@ -8,7 +8,7 @@ const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (!authHeader) {
       res.status(401).json({
         success: false,
-        message: "Authorization token missing",
+        error: "Authorization token missing",
       });
       return;
     }
@@ -20,7 +20,7 @@ const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (!token) {
       res.status(401).json({
         success: false,
-        message: "Invalid authorization format",
+        error: "Invalid authorization format",
       });
       return;
     }
@@ -33,7 +33,7 @@ const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (!decoded) {
       res.status(401).json({
         success: false,
-        message: "Invalid token",
+        error: "Invalid token",
       });
       return;
     }
@@ -44,7 +44,7 @@ const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     res.status(401).json({
       success: false,
-      message:
+      error:
         error?.name === "TokenExpiredError"
           ? "Token expired"
           : "Unauthorized access",

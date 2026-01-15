@@ -72,6 +72,9 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
     devDependencies:
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/db

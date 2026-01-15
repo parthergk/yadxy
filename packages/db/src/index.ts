@@ -6,3 +6,4 @@ export {default as Plan} from "./models/Plan";
 export {default as FeePayment} from "./models/FeePayment";
 export {default as NotificationLog} from "./models/NotificationLog";
 export {default as Contact} from "./models/Contact";
+export {default as Admin} from "./models/Admin"
