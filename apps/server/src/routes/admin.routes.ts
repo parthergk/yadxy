@@ -8,7 +8,7 @@ interface GroupedTeacherData {
   [month: string]: number;
 }
 
-adminRouter.get("/", adminMiddleware, async (req: Request, res: Response) => {
+adminRouter.get("/", async (req: Request, res: Response) => {
   try {
     const teachers = await User.find().select(
       "name email phone plan createdAt"
@@ -61,8 +61,7 @@ adminRouter.get("/", adminMiddleware, async (req: Request, res: Response) => {
 
     res.status(500).json({
       success: false,
-      message: "Failed to fetch admin dashboard data",
-      error: error?.message || "Internal Server Error",
+      error: "Failed to fetch admin dashboard data",
     });
     return;
   }
