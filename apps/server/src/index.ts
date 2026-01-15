@@ -14,6 +14,7 @@ import paymentRouter from "./routes/webhook/razorpay/payment.route";
 import paymentStatusRouter from "./routes/payment.routes";
 import sendOverduesRouter from "./routes/overdues.routes";
 import teacherRouter from "./routes/teacher.route";
+import adminRouter from "./routes/admin.routes";
 // import whatsappRoute from "./routes/webhook/whatsapp/verifyWebhook.route";
 // import cronRoutes from "./routes/cron.routes";
 
@@ -45,6 +46,7 @@ async function startServer() {
     app.use("/api/v1/verifyPayment",paymentStatusRouter)
     // app.use("/api/v1/whatsapp/verify", whatsappRoute)
     // app.use("/api/v1/cron", cronRoutes);
+    app.use("/api/v1/admin/dashboard", adminRouter)
 
     app.listen(PORT, () => {
       console.log(`Server is runing on port: ${PORT}`);
