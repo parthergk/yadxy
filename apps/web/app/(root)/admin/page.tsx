@@ -1,5 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import TeachersTable from "../../../components/admin/TeachersTable";
+import StudentTable from "../../../components/admin/StudentTable";
+import TeacherCart from "../../../components/admin/TeacherCart";
 interface Student {
   id: string;
   name: string;
@@ -10,36 +13,37 @@ interface Student {
 }
 
 interface Teacher {
+  id: string;
   name: string;
   email: string;
   phone: string;
   plan: {
-    subscription:{
-        startedAt: Date,
-        endedAt: Date,
-        status: string
-    },
-    trial:{
-        startedAt: Date,
-        endedAt: Date,
-        status: string
-    }
-  }
+    subscription: {
+      startedAt: Date;
+      endedAt: Date;
+      status: string;
+    };
+    trial: {
+      startedAt: Date;
+      endedAt: Date;
+      status: string;
+    };
+  };
 }
 interface Dashboard {
-  students: Student;
-  teachers: Teacher;
+  students: Student[];
+  teachers: Teacher[];
   teachersChart: {
     month: string;
     count: number;
-  };
+  }[];
   totalTeachres: number;
   totalStudetns: number;
   totalReminders: number;
 }
 const Admin = () => {
   const [message, setMessage] = useState("");
-  const [dashboard, setDashboard] = useState(null);
+  const [dashboard, setDashboard] = useState<Dashboard | null>(null);
 
   useEffect(() => {
     getData();
@@ -77,7 +81,25 @@ const Admin = () => {
   console.log("Message", message);
   console.log("Data", dashboard);
 
-  return <div>Admin</div>;
+  return (
+    <div>
+      <h1>Admin</h1>
+      <h2>Teacher</h2>
+      {dashboard?.teachers &&
+        dashboard?.teachers.map((teacher) => {
+          return <TeachersTable key={teacher.id} teacher={teacher} />;
+        })}
+      <h2>Student</h2>
+      {dashboard?.students &&
+        dashboard?.students.map((student) => {
+          return <StudentTable key={student.id}  student={student} />;
+        })}
+
+        {
+          dashboard?.teachersChart && <TeacherCart chartData = {dashboard.teachersChart}/>
+        }
+    </div>
+  );
 };
 
 export default Admin;
