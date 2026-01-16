@@ -82,11 +82,11 @@ const Admin = () => {
   console.log("Data", dashboard);
 
   return (
-    <div className=" bg-[#edf0f5] h-screen">
-      <div className="p-5">
+    <div className=" bg-[#edf0f5] h-full min-h-screen">
+      <div className="p-5 h-full">
         <h1 className=" text-4xl font-bold">Dashboard</h1>
 
-        <div className=" flex flex-col sm:flex-row  mt-5 h-full">
+        <div className=" flex flex-col sm:flex-row gap-2 mt-5">
           {/* sats card collections */}
           <div className=" flex flex-row sm:flex-col justify-center items-center gap-2 border p-2">
             {dashboard?.totalTeachers !== undefined && (
@@ -95,13 +95,19 @@ const Admin = () => {
             {dashboard?.totalStudents !== undefined && (
               <Stats name="Students" count={dashboard.totalStudents} />
             )}
-            {dashboard?.totalReminders !== undefined  &&
-              (<Stats name="Reminders" count={dashboard.totalReminders} />)
-            }
+            {dashboard?.totalReminders !== undefined && (
+              <Stats name="Reminders" count={dashboard.totalReminders} />
+            )}
           </div>
-          <div className=" border w-full">Cahrt</div>
+
+          {/* chart card  */}
+          <div className=" border w-full p-2 h-[200px] sm:h-[300px]">
+            {dashboard?.teachersChart !== undefined && (
+              <TeacherCart chartData={dashboard.teachersChart} />
+            )}
+          </div>
         </div>
-        <div className=" flex flex-col sm:flex-row border w-full p-2 gap-2">
+        <div className="h-full flex flex-col sm:flex-row border w-full p-2 mt-2 gap-2">
           <div className=" w-full border">Teacher table</div>
           <div className=" w-full border">Students table</div>
         </div>

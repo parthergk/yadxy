@@ -99,6 +99,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@recharts/devtools':
+        specifier: ^0.0.7
+        version: 0.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(recharts@3.3.0(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1))
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -609,6 +612,13 @@ packages:
 
   '@panva/hkdf@1.2.1':
     resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
+
+  '@recharts/devtools@0.0.7':
+    resolution: {integrity: sha512-ud66rUf3FYf1yQLGSCowI50EQyC/rcZblvDgNvfUIVaEXyQtr5K2DFgwegziqbVclsVBQLTxyntVViJN5H4oWQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+      recharts: ^3.3.0
 
   '@reduxjs/toolkit@2.9.2':
     resolution: {integrity: sha512-ZAYu/NXkl/OhqTz7rfPaAhY0+e8Fr15jqNxte/2exKUxvHyQ/hcqmdekiN1f+Lcw3pE+34FCgX+26zcUE3duCg==}
@@ -3492,6 +3502,12 @@ snapshots:
       fastq: 1.19.1
 
   '@panva/hkdf@1.2.1': {}
+
+  '@recharts/devtools@0.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(recharts@3.3.0(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1))':
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      recharts: 3.3.0(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)
 
   '@reduxjs/toolkit@2.9.2(react-redux@9.2.0(@types/react@19.1.0)(react@19.1.0)(redux@5.0.1))(react@19.1.0)':
     dependencies:
