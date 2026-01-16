@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import TeachersTable from "../../../components/admin/TeachersTable";
+import TeacherCard from "../../../components/admin/TeacherCard";
 import StudentTable from "../../../components/admin/StudentTable";
 import TeacherCart from "../../../components/admin/TeacherCart";
 import Stats from "../../../components/admin/Stats";
@@ -14,22 +14,23 @@ interface Student {
 }
 
 interface Teacher {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   phone: string;
   plan: {
     subscription: {
       startedAt: Date;
-      endedAt: Date;
+      endsAt: Date;
       status: string;
     };
     trial: {
       startedAt: Date;
-      endedAt: Date;
+      endsAt: Date;
       status: string;
     };
   };
+  createdAt: string;
 }
 interface Dashboard {
   students: Student[];
@@ -108,7 +109,18 @@ const Admin = () => {
           </div>
         </div>
         <div className="h-full flex flex-col sm:flex-row border w-full p-2 mt-2 gap-2">
-          <div className=" w-full border">Teacher table</div>
+          {/* teachers table  */}
+          <div className="w-full max-h-[60vh] overflow-y-auto p-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              Teachers
+            </h1>
+            <div className="space-y-2">
+              {dashboard?.teachers &&
+                dashboard.teachers.map((trch) => {
+                  return <TeacherCard key={trch._id} teacher={trch} />;
+                })}
+            </div>
+          </div>
           <div className=" w-full border">Students table</div>
         </div>
       </div>
