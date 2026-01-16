@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import TeachersTable from "../../../components/admin/TeachersTable";
 import StudentTable from "../../../components/admin/StudentTable";
 import TeacherCart from "../../../components/admin/TeacherCart";
+import Stats from "../../../components/admin/Stats";
 interface Student {
   id: string;
   name: string;
@@ -37,8 +38,8 @@ interface Dashboard {
     month: string;
     count: number;
   }[];
-  totalTeachres: number;
-  totalStudetns: number;
+  totalTeachers: number;
+  totalStudents: number;
   totalReminders: number;
 }
 const Admin = () => {
@@ -78,26 +79,33 @@ const Admin = () => {
     }
   }
 
-  console.log("Message", message);
   console.log("Data", dashboard);
 
   return (
-    <div>
-      <h1>Admin</h1>
-      <h2>Teacher</h2>
-      {dashboard?.teachers &&
-        dashboard?.teachers.map((teacher) => {
-          return <TeachersTable key={teacher.id} teacher={teacher} />;
-        })}
-      <h2>Student</h2>
-      {dashboard?.students &&
-        dashboard?.students.map((student) => {
-          return <StudentTable key={student.id}  student={student} />;
-        })}
+    <div className=" bg-[#edf0f5] h-screen">
+      <div className="p-5">
+        <h1 className=" text-4xl font-bold">Dashboard</h1>
 
-        {
-          dashboard?.teachersChart && <TeacherCart chartData = {dashboard.teachersChart}/>
-        }
+        <div className=" flex flex-col sm:flex-row  mt-5 h-full">
+          {/* sats card collections */}
+          <div className=" flex flex-row sm:flex-col justify-center items-center gap-2 border p-2">
+            {dashboard?.totalTeachers !== undefined && (
+              <Stats name="Teachers" count={dashboard.totalTeachers} />
+            )}
+            {dashboard?.totalStudents !== undefined && (
+              <Stats name="Students" count={dashboard.totalStudents} />
+            )}
+            {dashboard?.totalReminders !== undefined  &&
+              (<Stats name="Reminders" count={dashboard.totalReminders} />)
+            }
+          </div>
+          <div className=" border w-full">Cahrt</div>
+        </div>
+        <div className=" flex flex-col sm:flex-row border w-full p-2 gap-2">
+          <div className=" w-full border">Teacher table</div>
+          <div className=" w-full border">Students table</div>
+        </div>
+      </div>
     </div>
   );
 };
