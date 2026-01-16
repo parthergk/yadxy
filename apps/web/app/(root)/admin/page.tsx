@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import TeacherCard from "../../../components/admin/TeacherCard";
-import StudentTable from "../../../components/admin/StudentTable";
+import StudentCard from "../../../components/admin/StudentCard";
 import TeacherCart from "../../../components/admin/TeacherCart";
 import Stats from "../../../components/admin/Stats";
 interface Student {
-  id: string;
+  _id: string;
   name: string;
-  phone: string;
+  contact: string;
   monthlyFee: string;
   class: string;
   joinDate: Date;
@@ -110,7 +110,7 @@ const Admin = () => {
         </div>
         <div className="h-full flex flex-col sm:flex-row border w-full p-2 mt-2 gap-2">
           {/* teachers table  */}
-          <div className="w-full max-h-[60vh] overflow-y-auto p-2">
+          <div className="w-full max-h-[50vh] overflow-y-auto p-2">
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Teachers
             </h1>
@@ -121,7 +121,17 @@ const Admin = () => {
                 })}
             </div>
           </div>
-          <div className=" w-full border">Students table</div>
+          <div className="w-full max-h-[50vh] overflow-y-auto p-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              Student
+            </h1>
+            <div className="space-y-2">
+              {dashboard?.students &&
+                dashboard.students.map((stdnt) => {
+                  return <StudentCard key={stdnt._id} student={stdnt} />;
+                })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
